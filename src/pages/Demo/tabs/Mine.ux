@@ -1,0 +1,165 @@
+<template>
+  <div class="page-container">
+    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    
+    <div class="content">
+      <!-- 用户信息区域 -->
+      <div class="user-info">
+        <image class="avatar" src="/assets/imgs/logo.png"></image>
+        <text class="username">赵吾光</text>
+      </div>
+
+      <!-- 其他服务卡片 -->
+      <div class="card">
+        <text class="card-title">其他服务</text>
+        
+        <div class="menu-item" onclick="openAgreement">
+          <div class="menu-left">
+            <image class="menu-icon" src="/assets/imgs/yonghuxieyi.png"></image>
+            <text class="menu-text">用户协议</text>
+          </div>
+          <image class="arrow-icon" src="/assets/imgs/jiantou.png"></image>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="menu-item" onclick="openPrivacy">
+          <div class="menu-left">
+            <image class="menu-icon" src="/assets/imgs/yinsizhengce-1.png"></image>
+            <text class="menu-text">隐私政策</text>
+          </div>
+          <image class="arrow-icon" src="/assets/imgs/jiantou.png"></image>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  data() {
+    return {}
+  },
+  openAgreement() {
+    router.push({
+      uri: '/pages/Web',
+      params: {
+        url: 'https://api.51dsp.cn/index/agreement.do?pn=com.jsruijingcp.auspicioussign',
+        title: '用户协议'
+      }
+    })
+  },
+  openPrivacy() {
+    router.push({
+      uri: '/pages/Web',
+      params: {
+        url: 'https://api.51dsp.cn/index/privacy.do?pn=com.jsruijingcp.auspicioussign',
+        title: '隐私政策'
+      }
+    })
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../../assets/styles/style.scss';
+
+.page-container {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.content {
+  flex: 1;
+  flex-direction: column;
+  padding: 0 30 * $size-factor;
+  padding-top: 150 * $size-factor;
+}
+
+.user-info {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 60 * $size-factor;
+}
+
+.avatar {
+  width: 160 * $size-factor;
+  height: 160 * $size-factor;
+  border-radius: 80 * $size-factor;
+  margin-right: 30 * $size-factor;
+  border: 2px solid #ffffff;
+}
+
+.username {
+  font-size: 48 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 30 * $size-factor;
+  padding: 40 * $size-factor;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 40 * $size-factor;
+}
+
+.menu-item {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20 * $size-factor 0;
+}
+
+.menu-left {
+  flex-direction: row;
+  align-items: center;
+}
+
+.menu-icon {
+  width: 50 * $size-factor;
+  height: 50 * $size-factor;
+  margin-right: 30 * $size-factor;
+  object-fit: contain;
+}
+
+.menu-text {
+  font-size: 30 * $size-factor;
+  color: #000000;
+}
+
+.arrow-icon {
+  width: 24 * $size-factor;
+  height: 24 * $size-factor;
+  object-fit: contain;
+  opacity: 0.3;
+}
+
+.divider {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 20 * $size-factor 0;
+  margin-left: 80 * $size-factor; // Align with text start
+}
+</style>
+

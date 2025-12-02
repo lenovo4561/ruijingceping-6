@@ -1,0 +1,219 @@
+<template>
+  <div class="page-container">
+    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    
+    <div class="content">
+      <!-- 顶部 Header -->
+      <div class="header">
+        <image class="header-icon" src="/assets/imgs/loading-icon.png"></image>
+        <text class="header-title">瑞景测评</text>
+      </div>
+
+      <!-- Banner -->
+      <div class="banner-wrap">
+        <image class="banner-img" src="/assets/imgs/banner.png"></image>
+      </div>
+
+      <!-- 智商/情商 Grid -->
+      <div class="grid-section">
+        <image class="grid-item" src="/assets/imgs/zhishang.png"></image>
+        <image class="grid-item" src="/assets/imgs/qingshang.png"></image>
+      </div>
+
+      <!-- 热门测评 -->
+      <div class="hot-section">
+        <div class="section-header">
+          <text class="section-title">热门测评</text>
+          <image class="section-icon" src="/assets/imgs/yanjing.png"></image>
+        </div>
+
+        <!-- 列表 -->
+        <list class="hot-list">
+          <list-item type="hot-item" class="hot-item" for="{{hotList}}">
+            <text class="item-title">{{$item.title}}</text>
+            <div class="item-info">
+              <div class="rating">
+                <text class="rating-text">推荐指数：</text>
+                <div class="stars">
+                  <image class="star-icon" src="/assets/imgs/pingjia-xing.png" for="{{[1,2,3,4,5]}}"></image>
+                </div>
+              </div>
+              <text class="count">{{$item.count}} 人在测试</text>
+            </div>
+          </list-item>
+          <!-- 底部留白 -->
+          <list-item type="spacer" class="spacer"></list-item>
+        </list>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      hotList: [
+        { title: '自我认知清晰度测试', count: 9876 },
+        { title: '情绪管理成熟度测试', count: 9876 },
+        { title: '抗压能力任性测试', count: 9876 },
+        { title: '人际边界感测试', count: 9876 }
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../../assets/styles/style.scss';
+
+.page-container {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.content {
+  flex: 1;
+  flex-direction: column;
+  padding: 0 30 * $size-factor;
+  padding-top: 60 * $size-factor;
+}
+
+.header {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 30 * $size-factor;
+}
+
+.header-icon {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  margin-right: 10 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 40 * $size-factor;
+  font-weight: 900;
+  color: #000000;
+}
+
+.banner-wrap {
+  width: 100%;
+  height: 350 * $size-factor;
+  margin-bottom: 30 * $size-factor;
+  border-radius: 20 * $size-factor;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20 * $size-factor;
+  object-fit: cover;
+}
+
+.grid-section {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 40 * $size-factor;
+  width: 100%;
+}
+
+.grid-item {
+  width: 480 * $size-factor;
+  height: 200 * $size-factor;
+  object-fit: fill;
+}
+
+.hot-section {
+  flex: 1;
+  flex-direction: column;
+}
+
+.section-header {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20 * $size-factor;
+}
+
+.section-title {
+  font-size: 36 * $size-factor;
+  font-weight: 900;
+  color: #000000;
+  margin-right: 10 * $size-factor;
+}
+
+.section-icon {
+  width: 60 * $size-factor;
+  height: 30 * $size-factor;
+  object-fit: contain;
+}
+
+.hot-list {
+  flex: 1;
+  flex-direction: column;
+}
+
+.hot-item {
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 20 * $size-factor;
+  padding: 30 * $size-factor;
+  margin-bottom: 20 * $size-factor;
+}
+
+.item-title {
+  font-size: 32 * $size-factor;
+  color: #333333;
+  margin-bottom: 20 * $size-factor;
+  font-weight: bold;
+}
+
+.item-info {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating {
+  flex-direction: row;
+  align-items: center;
+}
+
+.rating-text {
+  font-size: 24 * $size-factor;
+  color: #999999;
+  margin-right: 10 * $size-factor;
+}
+
+.stars {
+  flex-direction: row;
+}
+
+.star-icon {
+  width: 30 * $size-factor;
+  height: 30 * $size-factor;
+  margin-right: 5 * $size-factor;
+}
+
+.count {
+  font-size: 24 * $size-factor;
+  color: #999999;
+}
+
+.spacer {
+  height: 100 * $size-factor;
+}
+</style>
