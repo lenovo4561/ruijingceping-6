@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
-    
+
     <div class="content">
       <!-- 顶部 Header -->
       <div class="header">
@@ -10,14 +10,22 @@
       </div>
 
       <!-- Banner -->
-      <div class="banner-wrap">
+      <div class="banner-wrap" onclick="goMBTITest">
         <image class="banner-img" src="/assets/imgs/banner.png"></image>
       </div>
 
       <!-- 智商/情商 Grid -->
       <div class="grid-section">
-        <image class="grid-item" src="/assets/imgs/zhishang.png"></image>
-        <image class="grid-item" src="/assets/imgs/qingshang.png"></image>
+        <image
+          class="grid-item"
+          src="/assets/imgs/zhishang.png"
+          onclick="goIQTest"
+        ></image>
+        <image
+          class="grid-item"
+          src="/assets/imgs/qingshang.png"
+          onclick="goEQTest"
+        ></image>
       </div>
 
       <!-- 热门测评 -->
@@ -30,15 +38,19 @@
         <!-- 列表 -->
         <list class="hot-list">
           <list-item type="hot-item" class="hot-item" for="{{hotList}}">
-            <text class="item-title">{{$item.title}}</text>
+            <text class="item-title">{{ $item.title }}</text>
             <div class="item-info">
               <div class="rating">
                 <text class="rating-text">推荐指数：</text>
                 <div class="stars">
-                  <image class="star-icon" src="/assets/imgs/pingjia-xing.png" for="{{[1,2,3,4,5]}}"></image>
+                  <image
+                    class="star-icon"
+                    src="/assets/imgs/pingjia-xing.png"
+                    for="{{[1,2,3,4,5]}}"
+                  ></image>
                 </div>
               </div>
-              <text class="count">{{$item.count}} 人在测试</text>
+              <text class="count">{{ $item.count }} 人在测试</text>
             </div>
           </list-item>
           <!-- 底部留白 -->
@@ -50,16 +62,27 @@
 </template>
 
 <script>
+import hotTests from '../../../data/hotTests.js'
+import router from '@system.router'
+
 export default {
-  data() {
-    return {
-      hotList: [
-        { title: '自我认知清晰度测试', count: 9876 },
-        { title: '情绪管理成熟度测试', count: 9876 },
-        { title: '抗压能力任性测试', count: 9876 },
-        { title: '人际边界感测试', count: 9876 }
-      ]
-    }
+  data: {
+    hotList: hotTests
+  },
+  goIQTest() {
+    router.push({
+      uri: '/pages/IQTest'
+    })
+  },
+  goEQTest() {
+    router.push({
+      uri: '/pages/EQTest'
+    })
+  },
+  goMBTITest() {
+    router.push({
+      uri: '/pages/MBTITest'
+    })
   }
 }
 </script>

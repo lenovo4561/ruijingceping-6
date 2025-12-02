@@ -1,16 +1,49 @@
 <template>
   <div class="page-container">
     <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+
     <div class="content">
-      <text class="title">常识</text>
+      <text class="page-title">生活常识</text>
+      <text class="page-subtitle">各种生活常识，轻松了解</text>
+
+      <list class="knowledge-list">
+        <list-item
+          type="knowledge-item"
+          class="knowledge-item"
+          for="{{knowledgeList}}"
+        >
+          <image class="item-img" src="{{$item.img}}"></image>
+          <div class="item-content">
+            <text class="item-title">{{ $item.title }}</text>
+            <div class="btn-wrap">
+              <text class="detail-btn" onclick="goDetail($item.id)"
+                >查看详情</text
+              >
+            </div>
+          </div>
+        </list-item>
+        <!-- 底部留白 -->
+        <list-item type="spacer" class="spacer"></list-item>
+      </list>
     </div>
   </div>
 </template>
 
 <script>
+import router from '@system.router'
+import commonKnowledge from '../../../data/commonKnowledge.js'
+
 export default {
-  data() {
-    return {}
+  data: {
+    knowledgeList: commonKnowledge
+  },
+  goDetail(id) {
+    router.push({
+      uri: '/pages/ChangshiDetail',
+      params: {
+        id: id
+      }
+    })
   }
 }
 </script>
@@ -38,13 +71,78 @@ export default {
 .content {
   flex: 1;
   flex-direction: column;
-  align-items: center;
+  padding: 0 30 * $size-factor;
   padding-top: 100 * $size-factor;
 }
 
-.title {
-  font-size: 24 * $size-factor;
-  color: $white;
+.page-title {
+  font-size: 48 * $size-factor;
+  color: #000000;
   font-weight: bold;
+  align-self: center;
+  margin-bottom: 20 * $size-factor;
+}
+
+.page-subtitle {
+  font-size: 28 * $size-factor;
+  color: #666666;
+  align-self: center;
+  margin-bottom: 60 * $size-factor;
+  letter-spacing: 2px;
+}
+
+.knowledge-list {
+  flex: 1;
+  flex-direction: column;
+}
+
+.knowledge-item {
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 20 * $size-factor;
+  padding: 30 * $size-factor;
+  margin-bottom: 30 * $size-factor;
+  align-items: center;
+}
+
+.item-img {
+  width: 200 * $size-factor;
+  height: 200 * $size-factor;
+  border-radius: 10 * $size-factor;
+  object-fit: cover;
+  margin-right: 30 * $size-factor;
+}
+
+.item-content {
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200 * $size-factor;
+}
+
+.item-title {
+  font-size: 30 * $size-factor;
+  color: #333333;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  lines: 3;
+}
+
+.btn-wrap {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.detail-btn {
+  background-color: #d3ff18; // 亮绿色按钮
+  padding: 10 * $size-factor 30 * $size-factor;
+  border-radius: 10 * $size-factor;
+  font-size: 24 * $size-factor;
+  color: #000000;
+  font-weight: bold;
+}
+
+.spacer {
+  height: 100 * $size-factor;
 }
 </style>

@@ -47,7 +47,31 @@
       "pages/DemoDetail": {
         "component": "index"
       },
+      "pages/ChangshiDetail": {
+        "component": "index"
+      },
+      "pages/Result": {
+        "component": "index"
+      },
+      "pages/EQTest": {
+        "component": "index"
+      },
+      "pages/EQResult": {
+        "component": "index"
+      },
+      "pages/IQTest": {
+        "component": "index"
+      },
+      "pages/IQResult": {
+        "component": "index"
+      },
       "pages/Web": {
+        "component": "index"
+      },
+      "pages/MBTITest": {
+        "component": "index"
+      },
+      "pages/MBTIResult": {
         "component": "index"
       }
     }

@@ -1,0 +1,414 @@
+/**
+ * 性格测试数据（10套）
+ * 评分规则：每题A选项得1分，B选项得2分，C选项得3分，D选项得4分
+ * 总分5-20分，分段：5-8分（极端型A）、9-12分（平衡型A）、13-16分（平衡型B）、17-20分（极端型B）
+ */
+const personalityTestData = [
+  {
+    id: 'xingge_1',
+    title: '内向vs外向测试',
+    questions: [
+      {
+        question: '周末休息时，你更愿意？',
+        options: [
+          { label: 'A', text: '独自待在家里看书、追剧或发呆', score: 1 },
+          { label: 'B', text: '和一两个好友安静地喝茶聊天', score: 2 },
+          { label: 'C', text: '参加小型聚会，和熟悉的朋友玩乐', score: 3 },
+          { label: 'D', text: '参加大型派对或社交活动，认识新朋友', score: 4 }
+        ]
+      },
+      {
+        question: '在团队讨论中，你通常会？',
+        options: [
+          { label: 'A', text: '安静倾听，只在被问到时才发言', score: 1 },
+          { label: 'B', text: '有想法时会说，但不会主动抢话', score: 2 },
+          { label: 'C', text: '积极参与讨论，分享自己的观点', score: 3 },
+          { label: 'D', text: '主导讨论，喜欢带动气氛', score: 4 }
+        ]
+      },
+      {
+        question: '遇到陌生人搭讪，你会？',
+        options: [
+          { label: 'A', text: '感到不自在，尽快结束对话', score: 1 },
+          { label: 'B', text: '礼貌回应，但不会深入交流', score: 2 },
+          { label: 'C', text: '友好交谈，但不会主动延续', score: 3 },
+          { label: 'D', text: '热情回应，主动了解对方', score: 4 }
+        ]
+      },
+      {
+        question: '长时间社交后，你会？',
+        options: [
+          { label: 'A', text: '感到精疲力竭，急需独处恢复', score: 1 },
+          { label: 'B', text: '有点累，需要一些安静时间', score: 2 },
+          { label: 'C', text: '感觉还好，稍作休息即可', score: 3 },
+          { label: 'D', text: '精力充沛，还想继续社交', score: 4 }
+        ]
+      },
+      {
+        question: '你更喜欢哪种工作方式？',
+        options: [
+          { label: 'A', text: '独立完成任务，减少与人协作', score: 1 },
+          { label: 'B', text: '小团队合作，固定的合作伙伴', score: 2 },
+          { label: 'C', text: '团队协作，经常与不同人交流', score: 3 },
+          { label: 'D', text: '频繁对外沟通，如销售、公关类工作', score: 4 }
+        ]
+      }
+    ],
+    results: [
+      {
+        min: 5,
+        max: 8,
+        title: '典型内向者',
+        desc:
+          '你是典型的内向者，独处是你恢复能量的方式。你喜欢深度思考，在熟悉的环境中更能发挥优势。建议接纳自己的内向特质，选择适合的社交方式，不必强迫自己融入喧嚣的环境。'
+      },
+      {
+        min: 9,
+        max: 12,
+        title: '偏内向者',
+        desc:
+          '你偏向内向，但也能适应一定的社交场合。你在小范围的深度交流中更自在，大型社交会让你疲惫。建议在社交和独处之间找到平衡，选择性参与社交活动。'
+      },
+      {
+        min: 13,
+        max: 16,
+        title: '偏外向者',
+        desc:
+          '你偏向外向，喜欢与人交流，但也需要一些独处时间。你在团队中能积极参与，也能独立完成任务。建议发挥社交优势的同时，保留一些独处时间进行深度思考。'
+      },
+      {
+        min: 17,
+        max: 20,
+        title: '典型外向者',
+        desc:
+          '你是典型的外向者，社交是你获取能量的方式。你喜欢热闹的环境，善于与人建立联系。建议在享受社交的同时，也学会独处和深度思考，避免过度依赖外界刺激。'
+      }
+    ]
+  },
+  {
+    id: 'xingge_2',
+    title: '理性vs感性测试',
+    questions: [
+      {
+        question: '做重大决定时，你更依赖？',
+        options: [
+          { label: 'A', text: '数据和逻辑分析，排除情感干扰', score: 1 },
+          { label: 'B', text: '以逻辑为主，适当考虑情感因素', score: 2 },
+          { label: 'C', text: '以直觉为主，结合一些理性分析', score: 3 },
+          { label: 'D', text: '完全跟随内心感受和直觉', score: 4 }
+        ]
+      },
+      {
+        question: '看完一部感人的电影，你会？',
+        options: [
+          { label: 'A', text: '分析剧情逻辑和拍摄手法', score: 1 },
+          { label: 'B', text: '有一点触动，但很快恢复平静', score: 2 },
+          { label: 'C', text: '被剧情感动，情绪需要一段时间平复', score: 3 },
+          { label: 'D', text: '完全沉浸其中，可能会哭泣', score: 4 }
+        ]
+      },
+      {
+        question: '朋友向你倾诉烦恼，你会？',
+        options: [
+          { label: 'A', text: '帮朋友分析问题，提供解决方案', score: 1 },
+          { label: 'B', text: '先分析问题，再给予一些安慰', score: 2 },
+          { label: 'C', text: '先安慰朋友，再尝试帮忙分析', score: 3 },
+          { label: 'D', text: '全程陪伴倾听，给予情感支持', score: 4 }
+        ]
+      },
+      {
+        question: '面对批评，你通常会？',
+        options: [
+          { label: 'A', text: '客观分析批评是否合理，不受情绪影响', score: 1 },
+          { label: 'B', text: '理性看待，但心里会有点不舒服', score: 2 },
+          { label: 'C', text: '先感到难过，之后再理性分析', score: 3 },
+          { label: 'D', text: '情绪波动较大，需要时间消化', score: 4 }
+        ]
+      },
+      {
+        question: '选择伴侣时，你更看重？',
+        options: [
+          { label: 'A', text: '条件匹配度，如经济、学历、家庭背景', score: 1 },
+          { label: 'B', text: '条件为主，感觉为辅', score: 2 },
+          { label: 'C', text: '感觉为主，条件为辅', score: 3 },
+          { label: 'D', text: '完全看感觉，心动最重要', score: 4 }
+        ]
+      }
+    ],
+    results: [
+      {
+        min: 5,
+        max: 8,
+        title: '高度理性者',
+        desc:
+          '你是高度理性的人，善于用逻辑分析问题，不易被情绪左右。你在决策时冷静客观，但可能会忽视情感因素。建议在保持理性的同时，多关注自己和他人的情感需求。'
+      },
+      {
+        min: 9,
+        max: 12,
+        title: '偏理性者',
+        desc:
+          '你偏向理性，但也能感知情感。你在处理问题时以逻辑为主，但不会完全忽视情感。建议继续保持理性优势，同时在人际交往中多表达情感。'
+      },
+      {
+        min: 13,
+        max: 16,
+        title: '偏感性者',
+        desc:
+          '你偏向感性，情感丰富，容易被触动。你在决策时会考虑感受，但也能进行一定的理性分析。建议在重大决策时多加入理性思考，避免冲动。'
+      },
+      {
+        min: 17,
+        max: 20,
+        title: '高度感性者',
+        desc:
+          '你是高度感性的人，情感细腻，容易共情。你的决策往往受情绪影响较大。建议在享受丰富情感的同时，学习一些理性分析的方法，让决策更全面。'
+      }
+    ]
+  },
+  {
+    id: 'xingge_3',
+    title: '乐观vs悲观测试',
+    questions: [
+      {
+        question: '遇到挫折时，你的第一反应是？',
+        options: [
+          { label: 'A', text: '相信这是暂时的，很快会好起来', score: 1 },
+          { label: 'B', text: '有点沮丧，但会积极寻找解决办法', score: 2 },
+          { label: 'C', text: '担心事情会变得更糟', score: 3 },
+          { label: 'D', text: '觉得自己运气不好，总是遇到坏事', score: 4 }
+        ]
+      },
+      {
+        question: '面对不确定的未来，你会？',
+        options: [
+          { label: 'A', text: '充满期待，相信会有好事发生', score: 1 },
+          { label: 'B', text: '保持希望，同时做好应对准备', score: 2 },
+          { label: 'C', text: '有些担忧，害怕出现意外', score: 3 },
+          { label: 'D', text: '非常焦虑，总是想到最坏的结果', score: 4 }
+        ]
+      },
+      {
+        question: '当计划失败时，你会？',
+        options: [
+          { label: 'A', text: '认为是学习的机会，调整后重新开始', score: 1 },
+          { label: 'B', text: '有点失望，但会总结经验继续努力', score: 2 },
+          { label: 'C', text: '怀疑自己的能力，信心受挫', score: 3 },
+          { label: 'D', text: '觉得自己不适合做这件事，想放弃', score: 4 }
+        ]
+      },
+      {
+        question: '早上醒来，你通常的心情是？',
+        options: [
+          { label: 'A', text: '期待新的一天，充满活力', score: 1 },
+          { label: 'B', text: '心情平稳，准备开始一天的工作', score: 2 },
+          { label: 'C', text: '有点疲惫，不太想起床', score: 3 },
+          { label: 'D', text: '感到沉重，不想面对新的一天', score: 4 }
+        ]
+      },
+      {
+        question: '回顾过去一年，你会？',
+        options: [
+          { label: 'A', text: '主要想到收获和成长', score: 1 },
+          { label: 'B', text: '收获和遗憾都会想到，但以收获为主', score: 2 },
+          { label: 'C', text: '更多想到遗憾和失败', score: 3 },
+          { label: 'D', text: '觉得这一年很糟糕，没什么值得回忆的', score: 4 }
+        ]
+      }
+    ],
+    results: [
+      {
+        min: 5,
+        max: 8,
+        title: '积极乐观者',
+        desc:
+          '你是积极乐观的人，总能看到事物好的一面，面对困难也能保持希望。这种心态让你更有韧性，但也要注意不要忽视潜在的风险。'
+      },
+      {
+        min: 9,
+        max: 12,
+        title: '理性乐观者',
+        desc:
+          '你偏向乐观，但也能理性看待问题。你在保持希望的同时会做好准备，这是一种健康的心态。建议继续保持这种平衡。'
+      },
+      {
+        min: 13,
+        max: 16,
+        title: '谨慎悲观者',
+        desc:
+          '你偏向悲观，容易担忧未来，对挫折的承受力较弱。建议学习一些积极心理学的方法，如感恩日记、正念冥想，培养更积极的思维方式。'
+      },
+      {
+        min: 17,
+        max: 20,
+        title: '消极悲观者',
+        desc:
+          '你是消极悲观的人，总是预期最坏的结果，容易陷入负面情绪。这种心态会影响生活质量和身心健康。建议寻求专业帮助，学习调整思维模式。'
+      }
+    ]
+  },
+  {
+    id: 'xingge_4',
+    title: '冒险vs保守测试',
+    questions: [
+      {
+        question: '面对一个高风险高回报的投资机会，你会？',
+        options: [
+          { label: 'A', text: '果断投入，相信自己的判断', score: 1 },
+          { label: 'B', text: '投入一部分，控制风险', score: 2 },
+          { label: 'C', text: '谨慎观望，等待更多信息', score: 3 },
+          { label: 'D', text: '完全不考虑，宁愿选择稳定收益', score: 4 }
+        ]
+      },
+      {
+        question: '有机会去一个完全陌生的国家工作，你会？',
+        options: [
+          { label: 'A', text: '兴奋地接受，享受未知的挑战', score: 1 },
+          { label: 'B', text: '认真考虑利弊后决定', score: 2 },
+          { label: 'C', text: '倾向拒绝，除非条件非常优厚', score: 3 },
+          { label: 'D', text: '直接拒绝，不愿离开熟悉的环境', score: 4 }
+        ]
+      },
+      {
+        question: '尝试一项从未接触过的极限运动，你会？',
+        options: [
+          { label: 'A', text: '迫不及待想要尝试', score: 1 },
+          { label: 'B', text: '在确保安全的前提下愿意尝试', score: 2 },
+          { label: 'C', text: '有些害怕，需要很大的鼓励才会尝试', score: 3 },
+          { label: 'D', text: '完全不会尝试，太危险了', score: 4 }
+        ]
+      },
+      {
+        question: '在职业选择上，你更倾向？',
+        options: [
+          { label: 'A', text: '创业或自由职业，追求更大的可能性', score: 1 },
+          { label: 'B', text: '有挑战性的工作，愿意承担一定风险', score: 2 },
+          { label: 'C', text: '稳定的工作，偶尔接受新挑战', score: 3 },
+          { label: 'D', text: '铁饭碗，追求绝对的稳定', score: 4 }
+        ]
+      },
+      {
+        question: '生活中遇到新事物，你的态度是？',
+        options: [
+          { label: 'A', text: '第一时间尝试，喜欢新鲜感', score: 1 },
+          { label: 'B', text: '了解后愿意尝试', score: 2 },
+          { label: 'C', text: '等别人验证后再考虑', score: 3 },
+          { label: 'D', text: '坚持用熟悉的方式，不愿改变', score: 4 }
+        ]
+      }
+    ],
+    results: [
+      {
+        min: 5,
+        max: 8,
+        title: '冒险探索者',
+        desc:
+          '你是天生的冒险家，喜欢挑战未知，追求刺激和新鲜感。这种特质让你更容易抓住机会，但也要注意评估风险，避免冲动决策。'
+      },
+      {
+        min: 9,
+        max: 12,
+        title: '理性冒险者',
+        desc:
+          '你愿意冒险，但会理性评估风险。你在追求机会的同时也会做好准备，这是一种平衡的态度。建议继续保持这种理性冒险的风格。'
+      },
+      {
+        min: 13,
+        max: 16,
+        title: '谨慎保守者',
+        desc:
+          '你偏向保守，喜欢稳定和确定性，对风险比较敏感。这种特质让你更稳健，但也可能错过一些机会。建议适当走出舒适区，尝试一些小的挑战。'
+      },
+      {
+        min: 17,
+        max: 20,
+        title: '极度保守者',
+        desc:
+          '你是极度保守的人，非常害怕风险和变化，总是选择最安全的路。这种特质虽然稳妥，但可能限制了你的发展。建议从小事开始，逐步培养接受变化的能力。'
+      }
+    ]
+  },
+  {
+    id: 'xingge_5',
+    title: '独立vs依赖测试',
+    questions: [
+      {
+        question: '遇到困难时，你的第一反应是？',
+        options: [
+          { label: 'A', text: '独自思考解决方案，不愿麻烦别人', score: 1 },
+          { label: 'B', text: '先自己尝试，实在不行再求助', score: 2 },
+          { label: 'C', text: '先问问身边人的意见', score: 3 },
+          { label: 'D', text: '立刻寻求他人帮助', score: 4 }
+        ]
+      },
+      {
+        question: '做重要决定时，你会？',
+        options: [
+          { label: 'A', text: '完全自己决定，不需要他人意见', score: 1 },
+          { label: 'B', text: '自己决定为主，参考他人意见', score: 2 },
+          { label: 'C', text: '广泛征求意见后再决定', score: 3 },
+          { label: 'D', text: '让信任的人帮自己做决定', score: 4 }
+        ]
+      },
+      {
+        question: '独自一人时，你会？',
+        options: [
+          { label: 'A', text: '非常享受，有很多事情可以做', score: 1 },
+          { label: 'B', text: '感觉还好，能自己安排时间', score: 2 },
+          { label: 'C', text: '有点无聊，希望有人陪伴', score: 3 },
+          { label: 'D', text: '感到孤独和不安', score: 4 }
+        ]
+      },
+      {
+        question: '在感情中，你更倾向？',
+        options: [
+          { label: 'A', text: '保持独立空间，各自有各自的生活', score: 1 },
+          { label: 'B', text: '有共同生活也有个人空间', score: 2 },
+          { label: 'C', text: '希望和伴侣有更多共同时间', score: 3 },
+          { label: 'D', text: '希望时刻和伴侣在一起', score: 4 }
+        ]
+      },
+      {
+        question: '对于他人的评价，你会？',
+        options: [
+          { label: 'A', text: '不太在意，坚持自己的想法', score: 1 },
+          { label: 'B', text: '参考但不会被左右', score: 2 },
+          { label: 'C', text: '比较在意，会影响自己的判断', score: 3 },
+          { label: 'D', text: '非常在意，会根据评价调整自己', score: 4 }
+        ]
+      }
+    ],
+    results: [
+      {
+        min: 5,
+        max: 8,
+        title: '高度独立者',
+        desc:
+          '你是高度独立的人，习惯依靠自己解决问题，不愿依赖他人。这种特质让你很有主见，但也要注意适当接受他人的帮助和建议。'
+      },
+      {
+        min: 9,
+        max: 12,
+        title: '偏独立者',
+        desc:
+          '你偏向独立，但也能接受他人的帮助。你在保持自主性的同时也能与他人合作，这是一种健康的状态。'
+      },
+      {
+        min: 13,
+        max: 16,
+        title: '偏依赖者',
+        desc:
+          '你偏向依赖他人，在做决定或面对困难时习惯寻求他人的支持。建议培养更多的独立思考和行动能力，增强自信心。'
+      },
+      {
+        min: 17,
+        max: 20,
+        title: '高度依赖者',
+        desc:
+          '你是高度依赖他人的人，很难独自做决定或面对困难，对他人的评价非常敏感。建议从小事开始培养独立能力，建立自我价值感。'
+      }
+    ]
+  }
+]
+
+export default personalityTestData

@@ -1,0 +1,493 @@
+<template>
+  <div class="page-container">
+    <div class="header">
+      <div class="back-btn" onclick="goBack">
+        <image class="back-icon" src="/assets/imgs/back.png"></image>
+      </div>
+      <text class="header-title">MBTI测试</text>
+      <div class="placeholder"></div>
+    </div>
+
+    <div class="content" if="{{currentQuestion}}">
+      <!-- 进度 -->
+      <div class="progress-section">
+        <div class="progress-text-row">
+          <text class="current-idx">第{{ currentIndex + 1 }}题</text>
+          <text class="total-idx">/ {{ totalCount }}</text>
+        </div>
+        <div class="progress-bar-bg">
+          <div
+            class="progress-bar-fill"
+            style="width: {{progressPercent}}%"
+          ></div>
+        </div>
+      </div>
+
+      <!-- 题目 -->
+      <text class="question-title">{{ currentQuestion.question }}</text>
+
+      <!-- 选项 -->
+      <div class="options-list">
+        <div
+          class="option-item {{selectedOption === item.label ? 'option-selected' : ''}}"
+          for="{{(index, item) in currentQuestion.options}}"
+          onclick="selectOption(item.label)"
+        >
+          <text class="option-text">{{ item.label }}. {{ item.text }}</text>
+          <image
+            if="{{selectedOption === item.label}}"
+            class="check-icon"
+            src="/assets/imgs/check.png"
+          ></image>
+        </div>
+      </div>
+
+      <!-- 底部按钮 -->
+      <div class="btn-row">
+        <div
+          class="prev-btn {{currentIndex === 0 ? 'btn-disabled' : ''}}"
+          onclick="prevQuestion"
+        >
+          <text class="prev-text">上一题</text>
+        </div>
+        <div
+          class="next-btn {{selectedOption === '' ? 'btn-disabled' : ''}}"
+          onclick="nextQuestion"
+        >
+          <text class="next-text">{{
+            currentIndex === totalCount - 1 ? '查看结果' : '下一题'
+          }}</text>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部 MBTI 16型人格展示 -->
+    <div class="mbti-section">
+      <text class="mbti-title">MBTI-16型人格</text>
+      <div class="mbti-grid">
+        <!-- 守护者 -->
+        <div class="mbti-row">
+          <text class="row-label">守护者</text>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/1、物流师 1.png"></image>
+            <text class="mbti-name">ISTJ(物流师)</text>
+          </div>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/2、守护者 1.png"></image>
+            <text class="mbti-name">ISFJ(守护者)</text>
+          </div>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/3、总经理 1.png"></image>
+            <text class="mbti-name">ESTJ(总经理)</text>
+          </div>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/4、执政官 1.png"></image>
+            <text class="mbti-name">ESFJ(执政官)</text>
+          </div>
+        </div>
+        <!-- 探险家 -->
+        <div class="mbti-row">
+          <text class="row-label">探险家</text>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/5、鉴赏家 1.png"></image>
+            <text class="mbti-name">ISTP(鉴赏家)</text>
+          </div>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/6、探险家 1.png"></image>
+            <text class="mbti-name">ISFP(探险家)</text>
+          </div>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/7、企业家 1.png"></image>
+            <text class="mbti-name">ESTP(企业家)</text>
+          </div>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/8、表演者 1.png"></image>
+            <text class="mbti-name">ESFP(表演者)</text>
+          </div>
+        </div>
+        <!-- 理想主义 -->
+        <div class="mbti-row">
+          <text class="row-label">理想主义</text>
+          <div class="mbti-item">
+            <image class="mbti-img" src="/assets/img_s/9、提倡者 1.png"></image>
+            <text class="mbti-name">INFJ(提倡者)</text>
+          </div>
+          <div class="mbti-item">
+            <image
+              class="mbti-img"
+              src="/assets/img_s/10、调停者 1.png"
+            ></image>
+            <text class="mbti-name">INFP(调停者)</text>
+          </div>
+          <div class="mbti-item">
+            <image
+              class="mbti-img"
+              src="/assets/img_s/11、主人公 1.png"
+            ></image>
+            <text class="mbti-name">ENFJ(主人公)</text>
+          </div>
+          <div class="mbti-item">
+            <image
+              class="mbti-img"
+              src="/assets/img_s/12、竞选者 1.png"
+            ></image>
+            <text class="mbti-name">ENFP(竞选者)</text>
+          </div>
+        </div>
+        <!-- 理性者 -->
+        <div class="mbti-row">
+          <text class="row-label">理性者</text>
+          <div class="mbti-item">
+            <image
+              class="mbti-img"
+              src="/assets/img_s/13、战略家 1.png"
+            ></image>
+            <text class="mbti-name">INTJ(战略家)</text>
+          </div>
+          <div class="mbti-item">
+            <image
+              class="mbti-img"
+              src="/assets/img_s/14、逻辑学家 1.png"
+            ></image>
+            <text class="mbti-name">INTP(逻辑学家)</text>
+          </div>
+          <div class="mbti-item">
+            <image
+              class="mbti-img"
+              src="/assets/img_s/15、指挥官 1.png"
+            ></image>
+            <text class="mbti-name">ENTJ(指挥官)</text>
+          </div>
+          <div class="mbti-item">
+            <image
+              class="mbti-img"
+              src="/assets/img_s/16、辩论家 1.png"
+            ></image>
+            <text class="mbti-name">ENTP(辩论家)</text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import mbtiTestData from '../../data/mbtiTestData.js'
+
+export default {
+  data: {
+    questions: [],
+    currentIndex: 0,
+    selectedOption: '',
+    totalCount: 0,
+    // 存储每道题的答案
+    answers: {},
+    // 维度得分
+    dimensionScores: {
+      E: 0,
+      I: 0,
+      S: 0,
+      N: 0,
+      T: 0,
+      F: 0,
+      J: 0,
+      P: 0
+    }
+  },
+  computed: {
+    currentQuestion() {
+      return this.questions[this.currentIndex]
+    },
+    progressPercent() {
+      return ((this.currentIndex + 1) / this.totalCount) * 100
+    }
+  },
+  onInit() {
+    this.questions = mbtiTestData.questions
+    this.totalCount = this.questions.length
+  },
+  goBack() {
+    router.back()
+  },
+  selectOption(label) {
+    this.selectedOption = label
+  },
+  prevQuestion() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--
+      // 恢复之前的选择
+      const prevAnswer = this.answers[this.currentIndex]
+      this.selectedOption = prevAnswer || ''
+    }
+  },
+  nextQuestion() {
+    if (this.selectedOption === '') return
+
+    // 保存当前答案
+    this.answers[this.currentIndex] = this.selectedOption
+
+    if (this.currentIndex < this.totalCount - 1) {
+      this.currentIndex++
+      // 恢复之前的选择或清空
+      const nextAnswer = this.answers[this.currentIndex]
+      this.selectedOption = nextAnswer || ''
+    } else {
+      // 计算结果
+      this.calculateResult()
+    }
+  },
+  calculateResult() {
+    // 重置得分
+    const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 }
+    const dimensions = mbtiTestData.dimensions
+
+    // 遍历所有答案计算得分
+    for (let i = 0; i < this.totalCount; i++) {
+      const answer = this.answers[i]
+      const question = this.questions[i]
+      const dimension = question.dimension
+
+      // 找到对应维度
+      const dim = dimensions.find(d => d.id === dimension)
+      if (dim && answer) {
+        if (answer === 'A') {
+          scores[dim.optionA]++
+        } else {
+          scores[dim.optionB]++
+        }
+      }
+    }
+
+    // 计算 MBTI 类型
+    const mbtiType =
+      (scores.E >= scores.I ? 'E' : 'I') +
+      (scores.S >= scores.N ? 'S' : 'N') +
+      (scores.T >= scores.F ? 'T' : 'F') +
+      (scores.J >= scores.P ? 'J' : 'P')
+
+    // 跳转到结果页
+    router.replace({
+      uri: '/pages/MBTIResult',
+      params: {
+        mbtiType: mbtiType,
+        scores: JSON.stringify(scores)
+      }
+    })
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../assets/styles/style.scss';
+
+.page-container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+.header {
+  height: 100 * $size-factor;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30 * $size-factor;
+  background-color: #ffffff;
+}
+
+.back-btn {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.placeholder {
+  width: 60 * $size-factor;
+}
+
+.content {
+  flex-direction: column;
+  padding: 30 * $size-factor;
+}
+
+.progress-section {
+  flex-direction: column;
+  margin-bottom: 30 * $size-factor;
+}
+
+.progress-text-row {
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 15 * $size-factor;
+}
+
+.current-idx {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.total-idx {
+  font-size: 28 * $size-factor;
+  color: #999999;
+  margin-left: 5 * $size-factor;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8 * $size-factor;
+  background-color: #e0e0e0;
+  border-radius: 4 * $size-factor;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #7cb342;
+  border-radius: 4 * $size-factor;
+}
+
+.question-title {
+  font-size: 34 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+  line-height: 50 * $size-factor;
+  margin-bottom: 30 * $size-factor;
+}
+
+.options-list {
+  flex-direction: column;
+}
+
+.option-item {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30 * $size-factor;
+  border: 2px solid #eeeeee;
+  border-radius: 16 * $size-factor;
+  margin-bottom: 20 * $size-factor;
+  background-color: #ffffff;
+}
+
+.option-selected {
+  border-color: #7cb342;
+  background-color: #f0f7e6;
+}
+
+.option-text {
+  font-size: 28 * $size-factor;
+  color: #333333;
+  flex: 1;
+}
+
+.check-icon {
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
+}
+
+.btn-row {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 30 * $size-factor;
+}
+
+.prev-btn {
+  width: 280 * $size-factor;
+  height: 90 * $size-factor;
+  border: 2px solid #333333;
+  border-radius: 45 * $size-factor;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.next-btn {
+  width: 280 * $size-factor;
+  height: 90 * $size-factor;
+  background-color: #7cb342;
+  border-radius: 45 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-disabled {
+  opacity: 0.5;
+}
+
+.prev-text {
+  font-size: 30 * $size-factor;
+  color: #333333;
+}
+
+.next-text {
+  font-size: 30 * $size-factor;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.mbti-section {
+  flex-direction: column;
+  padding: 30 * $size-factor;
+  background-color: #ffffff;
+  margin-top: 20 * $size-factor;
+}
+
+.mbti-title {
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20 * $size-factor;
+}
+
+.mbti-grid {
+  flex-direction: column;
+}
+
+.mbti-row {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 15 * $size-factor;
+}
+
+.row-label {
+  width: 80 * $size-factor;
+  font-size: 22 * $size-factor;
+  color: #7cb342;
+  writing-mode: vertical-rl;
+  text-align: center;
+}
+
+.mbti-item {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mbti-img {
+  width: 120 * $size-factor;
+  height: 120 * $size-factor;
+  object-fit: contain;
+  margin-bottom: 5 * $size-factor;
+}
+
+.mbti-name {
+  font-size: 18 * $size-factor;
+  color: #666666;
+  text-align: center;
+}
+</style>

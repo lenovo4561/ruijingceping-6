@@ -1,0 +1,224 @@
+<template>
+  <div class="page-container">
+    <div class="header">
+      <div class="back-btn" onclick="goBack">
+        <image class="back-icon" src="/assets/imgs/back.png"></image>
+      </div>
+      <text class="header-title">智商测试</text>
+      <div class="placeholder"></div>
+    </div>
+
+    <scroll class="scroll-content">
+      <div class="content">
+        <!-- 装饰图 -->
+        <image class="result-img" src="/assets/imgs/result-brain.png"></image>
+
+        <div class="card">
+          <text class="card-title">测试结果</text>
+
+          <div class="score-row">
+            <text class="score-label">得分：</text>
+            <text class="score-value">{{ score }}</text>
+          </div>
+
+          <text class="result-level">{{ result.level }}</text>
+
+          <text class="result-desc">{{ result.description }}</text>
+        </div>
+      </div>
+    </scroll>
+
+    <div class="footer">
+      <div class="btn restart-btn" onclick="restart">
+        <text class="btn-text-white">重新测试</text>
+      </div>
+      <div class="btn home-btn" onclick="goHome">
+        <text class="btn-text-white">返回首页</text>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import iqData from '../../data/iq_test.json'
+
+export default {
+  protected: {
+    score: 0
+  },
+  data: {
+    result: {}
+  },
+  onInit() {
+    this.calculateResult()
+  },
+  calculateResult() {
+    const score = parseInt(this.score) || 0
+    const results = iqData.results
+
+    let match = results.find(r => score >= r.minScore && score <= r.maxScore)
+    if (!match) {
+      // Fallback
+      if (score < results[0].minScore) match = results[0]
+      else match = results[results.length - 1]
+    }
+    this.result = match || {}
+  },
+  goBack() {
+    router.back()
+  },
+  restart() {
+    router.replace({
+      uri: '/pages/IQTest'
+    })
+  },
+  goHome() {
+    router.clear()
+    router.replace({
+      uri: '/pages/Demo'
+    })
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../assets/styles/style.scss';
+
+.page-container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #e6f7ff; /* Light blue tint */
+}
+
+.header {
+  height: 100 * $size-factor;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30 * $size-factor;
+}
+
+.back-btn {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.placeholder {
+  width: 60 * $size-factor;
+}
+
+.scroll-content {
+  flex: 1;
+}
+
+.content {
+  flex-direction: column;
+  align-items: center;
+  padding: 30 * $size-factor;
+  padding-bottom: 100 * $size-factor;
+}
+
+.result-img {
+  width: 300 * $size-factor;
+  height: 300 * $size-factor;
+  object-fit: contain;
+  margin-bottom: 40 * $size-factor;
+  background-color: #cccccc; /* Placeholder color since image might not exist */
+  border-radius: 150 * $size-factor;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 30 * $size-factor;
+  padding: 40 * $size-factor;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 40 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 30 * $size-factor;
+}
+
+.score-row {
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 20 * $size-factor;
+}
+
+.score-label {
+  font-size: 32 * $size-factor;
+  color: #666666;
+  margin-bottom: 5 * $size-factor;
+}
+
+.score-value {
+  font-size: 60 * $size-factor;
+  font-weight: bold;
+  color: #00bfff;
+}
+
+.result-level {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20 * $size-factor;
+  align-self: flex-start;
+}
+
+.result-desc {
+  font-size: 28 * $size-factor;
+  color: #666666;
+  line-height: 48 * $size-factor;
+  text-align: justify;
+}
+
+.footer {
+  padding: 30 * $size-factor;
+  padding-bottom: 60 * $size-factor;
+  background-color: #ffffff;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 330 * $size-factor;
+  height: 100 * $size-factor;
+  border-radius: 50 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.restart-btn {
+  background-color: #333333;
+}
+
+.home-btn {
+  background-color: #00bfff;
+}
+
+.btn-text-white {
+  color: #ffffff;
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+}
+</style>

@@ -1,16 +1,127 @@
 <template>
   <div class="page-container">
     <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+
+    <!-- Banner -->
+    <div class="banner-wrap">
+      <image class="banner-img" src="/assets/imgs/banner-1.png"></image>
+      <text class="banner-text">不只是标签，更是你的人格画像</text>
+    </div>
+
     <div class="content">
-      <text class="title">分类</text>
+      <!-- Tabs -->
+      <div class="tabs">
+        <div
+          class="tab-item {{currentCategory === 'xingge' ? 'tab-active' : ''}}"
+          onclick="switchCategory('xingge')"
+        >
+          <text
+            class="tab-text {{currentCategory === 'xingge' ? 'text-active' : ''}}"
+            >性格</text
+          >
+        </div>
+        <div
+          class="tab-item {{currentCategory === 'qinggan' ? 'tab-active' : ''}}"
+          onclick="switchCategory('qinggan')"
+        >
+          <text
+            class="tab-text {{currentCategory === 'qinggan' ? 'text-active' : ''}}"
+            >情感</text
+          >
+        </div>
+        <div
+          class="tab-item {{currentCategory === 'shiye' ? 'tab-active' : ''}}"
+          onclick="switchCategory('shiye')"
+        >
+          <text
+            class="tab-text {{currentCategory === 'shiye' ? 'text-active' : ''}}"
+            >事业</text
+          >
+        </div>
+        <div
+          class="tab-item {{currentCategory === 'quwei' ? 'tab-active' : ''}}"
+          onclick="switchCategory('quwei')"
+        >
+          <text
+            class="tab-text {{currentCategory === 'quwei' ? 'text-active' : ''}}"
+            >趣味</text
+          >
+        </div>
+      </div>
+
+      <!-- List -->
+      <list class="test-list">
+        <list-item
+          type="test-item"
+          class="test-item"
+          for="{{currentList}}"
+          onclick="goDetail($item.index)"
+        >
+          <text class="item-title">{{ $item.title }}</text>
+          <div class="item-info">
+            <div class="rating">
+              <text class="rating-text">推荐指数：</text>
+              <div class="stars">
+                <image
+                  class="star-icon"
+                  src="/assets/imgs/pingjia-xing.png"
+                  for="{{[1,2,3,4,5]}}"
+                ></image>
+              </div>
+            </div>
+            <text class="count">9876 人在测试</text>
+          </div>
+        </list-item>
+        <!-- 底部留白 -->
+        <list-item type="spacer" class="spacer"></list-item>
+      </list>
     </div>
   </div>
 </template>
 
 <script>
+import router from '@system.router'
+import testQuestions from '../../../data/testQuestions.js'
+
 export default {
-  data() {
-    return {}
+  data: {
+    currentCategory: 'xingge',
+    currentList: []
+  },
+  onInit() {
+    this.updateList()
+  },
+  switchCategory(category) {
+    this.currentCategory = category
+    this.updateList()
+  },
+  updateList() {
+    if (testQuestions[this.currentCategory]) {
+      this.currentList = testQuestions[this.currentCategory].map(
+        (item, index) => {
+          let cleanTitle = item.title
+          if (cleanTitle.includes('：')) {
+            cleanTitle = cleanTitle.split('：')[1]
+          }
+          return {
+            ...item,
+            title: cleanTitle,
+            index: index
+          }
+        }
+      )
+    } else {
+      this.currentList = []
+    }
+  },
+  goDetail(index) {
+    router.push({
+      uri: '/pages/DemoDetail',
+      params: {
+        category: this.currentCategory,
+        testId: index
+      }
+    })
   }
 }
 </script>
@@ -35,16 +146,125 @@ export default {
   object-fit: fill;
 }
 
+.banner-wrap {
+  width: 100%;
+  height: 500 * $size-factor;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.banner-text {
+  color: #adff2f; // 荧光绿
+  font-size: 40 * $size-factor;
+  font-weight: bold;
+  margin-top: 200 * $size-factor;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .content {
   flex: 1;
   flex-direction: column;
-  align-items: center;
-  padding-top: 100 * $size-factor;
+  background-color: #ffffff;
+  border-top-left-radius: 40 * $size-factor;
+  border-top-right-radius: 40 * $size-factor;
+  margin-top: -40 * $size-factor;
+  padding: 40 * $size-factor;
 }
 
-.title {
-  font-size: 24 * $size-factor;
-  color: $white;
+.tabs {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 40 * $size-factor;
+  background-color: #f8f8f8;
+  border-radius: 40 * $size-factor;
+  padding: 10 * $size-factor;
+}
+
+.tab-item {
+  flex: 1;
+  height: 70 * $size-factor;
+  justify-content: center;
+  align-items: center;
+  border-radius: 35 * $size-factor;
+}
+
+.tab-active {
+  background-color: #000000;
+}
+
+.tab-text {
+  font-size: 28 * $size-factor;
+  color: #999999;
+}
+
+.text-active {
+  color: #ffffff;
   font-weight: bold;
+}
+
+.test-list {
+  flex: 1;
+  flex-direction: column;
+}
+
+.test-item {
+  flex-direction: column;
+  background-color: #f9fafb;
+  border-radius: 20 * $size-factor;
+  padding: 30 * $size-factor;
+  margin-bottom: 20 * $size-factor;
+}
+
+.item-title {
+  font-size: 32 * $size-factor;
+  color: #333333;
+  margin-bottom: 20 * $size-factor;
+  font-weight: bold;
+}
+
+.item-info {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating {
+  flex-direction: row;
+  align-items: center;
+}
+
+.rating-text {
+  font-size: 24 * $size-factor;
+  color: #999999;
+  margin-right: 10 * $size-factor;
+}
+
+.stars {
+  flex-direction: row;
+}
+
+.star-icon {
+  width: 30 * $size-factor;
+  height: 30 * $size-factor;
+  margin-right: 5 * $size-factor;
+}
+
+.count {
+  font-size: 24 * $size-factor;
+  color: #999999;
+}
+
+.spacer {
+  height: 100 * $size-factor;
 }
 </style>

@@ -1,0 +1,267 @@
+<template>
+  <div class="page-container">
+    <div class="header">
+      <div class="back-btn" onclick="goBack">
+        <image class="back-icon" src="/assets/imgs/back.png"></image>
+      </div>
+      <text class="header-title">智商测试</text>
+      <div class="placeholder"></div>
+    </div>
+
+    <div class="content" if="{{currentQuestion}}">
+      <!-- 进度 -->
+      <div class="progress-section">
+        <div class="progress-text-row">
+          <text class="current-idx">第{{ currentIndex + 1 }}题</text>
+          <text class="total-idx">/{{ totalCount }}</text>
+        </div>
+        <div class="progress-bar-bg">
+          <div
+            class="progress-bar-fill"
+            style="width: {{progressPercent}}%"
+          ></div>
+        </div>
+      </div>
+
+      <!-- 题目 -->
+      <text class="question-title">{{ currentQuestion.title }}</text>
+
+      <!-- 选项 -->
+      <div class="options-list">
+        <div
+          class="option-item {{selectedOptionIndex === $idx ? 'option-selected' : ''}}"
+          for="{{(index, item) in currentQuestion.options}}"
+          onclick="selectOption(index)"
+        >
+          <text class="option-text">{{ item.label }}. {{ item.content }}</text>
+          <image
+            if="{{selectedOptionIndex === index}}"
+            class="check-icon"
+            src="/assets/imgs/check.png"
+          ></image>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部按钮 -->
+    <div class="footer">
+      <div
+        class="next-btn {{selectedOptionIndex === -1 ? 'btn-disabled' : ''}}"
+        onclick="nextQuestion"
+      >
+        <text class="next-text">{{
+          currentIndex === totalCount - 1 ? '查看结果' : '下一题'
+        }}</text>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import iqData from '../../data/iq_test.json'
+
+export default {
+  data: {
+    questions: [],
+    currentIndex: 0,
+    selectedOptionIndex: -1,
+    score: 0,
+    totalCount: 0
+  },
+  computed: {
+    currentQuestion() {
+      return this.questions[this.currentIndex]
+    },
+    progressPercent() {
+      return ((this.currentIndex + 1) / this.totalCount) * 100
+    }
+  },
+  onInit() {
+    this.questions = iqData.questions
+    this.totalCount = this.questions.length
+  },
+  goBack() {
+    router.back()
+  },
+  selectOption(index) {
+    this.selectedOptionIndex = index
+  },
+  nextQuestion() {
+    if (this.selectedOptionIndex === -1) return
+
+    // Check Answer and add score
+    const selectedOption = this.currentQuestion.options[
+      this.selectedOptionIndex
+    ]
+    if (selectedOption.label === this.currentQuestion.correctAnswer) {
+      this.score += iqData.scorePerQuestion
+    }
+
+    if (this.currentIndex < this.totalCount - 1) {
+      // Next question
+      this.currentIndex++
+      this.selectedOptionIndex = -1
+    } else {
+      // Finish
+      router.replace({
+        uri: '/pages/IQResult',
+        params: {
+          score: this.score
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../assets/styles/style.scss';
+
+.page-container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.header {
+  height: 100 * $size-factor;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30 * $size-factor;
+}
+
+.back-btn {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.placeholder {
+  width: 60 * $size-factor;
+}
+
+.content {
+  flex: 1;
+  flex-direction: column;
+  padding: 40 * $size-factor;
+}
+
+.progress-section {
+  flex-direction: column;
+  margin-bottom: 60 * $size-factor;
+}
+
+.progress-text-row {
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 15 * $size-factor;
+}
+
+.current-idx {
+  font-size: 48 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.total-idx {
+  font-size: 28 * $size-factor;
+  color: #999999;
+  margin-bottom: 8 * $size-factor;
+  margin-left: 5 * $size-factor;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 12 * $size-factor;
+  background-color: #f0f0f0;
+  border-radius: 6 * $size-factor;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #00bfff; /* Blue for IQ */
+  border-radius: 6 * $size-factor;
+}
+
+.question-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+  line-height: 54 * $size-factor;
+  margin-bottom: 60 * $size-factor;
+}
+
+.options-list {
+  flex-direction: column;
+}
+
+.option-item {
+  flex-direction: column;
+  padding: 30 * $size-factor;
+  border: 1px solid #eeeeee;
+  border-radius: 16 * $size-factor;
+  margin-bottom: 30 * $size-factor;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.option-selected {
+  border-color: #00bfff;
+  border-width: 2px;
+}
+
+.option-text {
+  font-size: 30 * $size-factor;
+  color: #333333;
+  line-height: 44 * $size-factor;
+}
+
+.check-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
+  background-color: #00bfff;
+}
+
+.footer {
+  padding: 30 * $size-factor;
+  padding-bottom: 60 * $size-factor;
+}
+
+.next-btn {
+  width: 100%;
+  height: 100 * $size-factor;
+  background-color: #00bfff;
+  border-radius: 50 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-disabled {
+  background-color: #eeeeee;
+}
+
+.next-text {
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+  color: #ffffff;
+}
+</style>

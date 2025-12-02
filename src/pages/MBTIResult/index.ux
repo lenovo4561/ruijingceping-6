@@ -1,0 +1,321 @@
+<template>
+  <div class="page-container">
+    <div class="header">
+      <div class="back-btn" onclick="goBack">
+        <image class="back-icon" src="/assets/imgs/back.png"></image>
+      </div>
+      <text class="header-title">MBTI-16型人格测试评估报告</text>
+      <div class="placeholder"></div>
+    </div>
+
+    <scroll class="scroll-content">
+      <div class="content">
+        <!-- 顶部结果卡片 -->
+        <div class="result-card">
+          <div class="result-header">
+            <div class="result-text">
+              <text class="result-label">你的测试类型可能是</text>
+              <text class="result-type">{{ mbtiType }}</text>
+              <text class="result-name">{{ result.name }}</text>
+            </div>
+            <image class="result-img" src="{{result.image}}"></image>
+          </div>
+
+          <!-- 维度进度条 -->
+          <div class="dimension-bars">
+            <div class="dim-row" for="{{dimensions}}">
+              <text class="dim-label-left">{{ $item.left }}</text>
+              <div class="progress-bg">
+                <div
+                  class="progress-bar"
+                  style="width: {{$item.score}}%; left: {{$item.leftPos}}%"
+                ></div>
+              </div>
+              <text class="dim-label-right">{{ $item.right }}</text>
+            </div>
+          </div>
+        </div>
+
+        <!-- 内容卡片 -->
+        <div class="info-card">
+          <text class="card-title">核心特质</text>
+          <text class="card-content">{{ result.coreTraits }}</text>
+
+          <text class="card-title mt-30">行为表现</text>
+          <text class="card-content">{{ result.behavior }}</text>
+        </div>
+
+        <div class="info-card">
+          <text class="card-title">适配领域</text>
+
+          <div class="field-item">
+            <text class="field-title">职业领域</text>
+            <text class="card-content">{{ result.career }}</text>
+          </div>
+
+          <div class="field-item">
+            <text class="field-title">学习领域</text>
+            <text class="card-content">{{ result.study }}</text>
+          </div>
+
+          <div class="field-item">
+            <text class="field-title">生活领域</text>
+            <text class="card-content">{{ result.life }}</text>
+          </div>
+        </div>
+      </div>
+    </scroll>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import mbtiPersonalityTypes from '../../data/mbtiPersonalityTypes.js'
+
+export default {
+  protected: {
+    mbtiType: '',
+    scores: ''
+  },
+  data: {
+    result: {},
+    dimensions: []
+  },
+  onInit() {
+    this.loadResult()
+    this.processScores()
+  },
+  loadResult() {
+    const type = this.mbtiType || 'ISTJ'
+    this.result = mbtiPersonalityTypes[type] || mbtiPersonalityTypes['ISTJ']
+  },
+  processScores() {
+    if (!this.scores) return
+
+    try {
+      const scoresObj = JSON.parse(this.scores)
+      const total = 13 // 每维度13题
+
+      this.dimensions = [
+        {
+          left: '外倾(E)',
+          right: '内向(I)',
+          score: (Math.max(scoresObj.E, scoresObj.I) / total) * 100,
+          leftPos:
+            scoresObj.E > scoresObj.I
+              ? 0
+              : 100 - (Math.max(scoresObj.E, scoresObj.I) / total) * 100
+        },
+        {
+          left: '实感(S)',
+          right: '直觉(N)',
+          score: (Math.max(scoresObj.S, scoresObj.N) / total) * 100,
+          leftPos:
+            scoresObj.S > scoresObj.N
+              ? 0
+              : 100 - (Math.max(scoresObj.S, scoresObj.N) / total) * 100
+        },
+        {
+          left: '理性(T)',
+          right: '感性(F)',
+          score: (Math.max(scoresObj.T, scoresObj.F) / total) * 100,
+          leftPos:
+            scoresObj.T > scoresObj.F
+              ? 0
+              : 100 - (Math.max(scoresObj.T, scoresObj.F) / total) * 100
+        },
+        {
+          left: '判断(J)',
+          right: '知觉(P)',
+          score: (Math.max(scoresObj.J, scoresObj.P) / total) * 100,
+          leftPos:
+            scoresObj.J > scoresObj.P
+              ? 0
+              : 100 - (Math.max(scoresObj.J, scoresObj.P) / total) * 100
+        }
+      ]
+    } catch (e) {
+      console.error('Parse scores failed:', e)
+    }
+  },
+  goBack() {
+    router.back()
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../assets/styles/style.scss';
+
+.page-container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #b2ebf2; /* 浅蓝背景 */
+}
+
+.header {
+  height: 100 * $size-factor;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30 * $size-factor;
+}
+
+.back-btn {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 30 * $size-factor;
+}
+
+.back-icon {
+  width: 30 * $size-factor;
+  height: 30 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.placeholder {
+  width: 60 * $size-factor;
+}
+
+.scroll-content {
+  flex: 1;
+}
+
+.content {
+  flex-direction: column;
+  padding: 30 * $size-factor;
+  padding-bottom: 50 * $size-factor;
+}
+
+.result-card {
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 20 * $size-factor;
+  padding: 40 * $size-factor;
+  margin-bottom: 30 * $size-factor;
+}
+
+.result-header {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 40 * $size-factor;
+}
+
+.result-text {
+  flex-direction: column;
+}
+
+.result-label {
+  font-size: 24 * $size-factor;
+  color: #999999;
+  margin-bottom: 10 * $size-factor;
+}
+
+.result-type {
+  font-size: 80 * $size-factor;
+  font-weight: 900;
+  color: #5d4037; /* 深褐色 */
+  margin-bottom: 10 * $size-factor;
+}
+
+.result-name {
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+  color: #5d4037;
+}
+
+.result-img {
+  width: 200 * $size-factor;
+  height: 200 * $size-factor;
+  object-fit: contain;
+}
+
+.dimension-bars {
+  flex-direction: column;
+}
+
+.dim-row {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20 * $size-factor;
+}
+
+.dim-label-left {
+  width: 120 * $size-factor;
+  font-size: 26 * $size-factor;
+  color: #333333;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 20 * $size-factor;
+}
+
+.dim-label-right {
+  width: 120 * $size-factor;
+  font-size: 26 * $size-factor;
+  color: #333333;
+  font-weight: bold;
+  margin-left: 20 * $size-factor;
+}
+
+.progress-bg {
+  flex: 1;
+  height: 16 * $size-factor;
+  background-color: #f0f0f0;
+  border-radius: 8 * $size-factor;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #b2ebf2, #81c784);
+  border-radius: 8 * $size-factor;
+  position: absolute;
+}
+
+.info-card {
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 20 * $size-factor;
+  padding: 40 * $size-factor;
+  margin-bottom: 20 * $size-factor;
+}
+
+.card-title {
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20 * $size-factor;
+}
+
+.mt-30 {
+  margin-top: 30 * $size-factor;
+}
+
+.card-content {
+  font-size: 28 * $size-factor;
+  color: #666666;
+  line-height: 46 * $size-factor;
+}
+
+.field-item {
+  flex-direction: column;
+  margin-bottom: 30 * $size-factor;
+}
+
+.field-title {
+  font-size: 30 * $size-factor;
+  font-weight: bold;
+  color: #555555;
+  margin-bottom: 10 * $size-factor;
+}
+</style>

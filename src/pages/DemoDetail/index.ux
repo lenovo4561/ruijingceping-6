@@ -4,32 +4,158 @@
 -->
 
 <template>
-  <!-- template里只能有一个根节点 -->
-  <div class="wrapper">
-    <text class="title">{{ text }}</text>
-    <text class="desc"
-      >快应用是移动互联网新型应用生态，与手机系统深度整合，为用户提供更加场景化的体验。具备传统APP完整的应用体验，但无需安装、即点即用。
-    </text>
-    <text class="desc"
-      >标准是由主流手机厂商组成的快应用联盟联合制定。其标准的诞生将在研发接口、能力接入、开发者服务等层面建设标准平台，以平台化的生态模式对个人开发者和企业开发者全品类开放
-    </text>
-    <input
-      class="btn"
-      type="button"
-      value="欢迎使用"
-      onclick="onWelcomeBtnClick"
-    />
+  <div class="page-container">
+    <!-- 背景图 -->
+    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+
+    <div class="content">
+      <!-- Header -->
+      <div class="header">
+        <div class="back-btn" onclick="goBack">
+          <image class="back-icon" src="/assets/imgs/back.png"></image>
+        </div>
+        <text class="header-title">{{ testTitle }}</text>
+        <div class="placeholder"></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-section">
+        <div class="progress-info">
+          <text class="current-index">第{{ currentIndex + 1 }}题</text>
+          <text class="total-count">/{{ totalCount }}</text>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: {{progressWidth}}%"></div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="question-card">
+        <text class="question-text">{{ currentQuestion.question }}</text>
+
+        <!-- Options -->
+        <div class="options-list">
+          <div
+            class="option-item {{selectedOption === $item.label ? 'option-selected' : ''}}"
+            for="{{currentQuestion.options}}"
+            onclick="selectOption($item.label)"
+          >
+            <text class="option-text">{{ $item.label }}. {{ $item.text }}</text>
+            <image
+              if="{{selectedOption === $item.label}}"
+              class="check-icon"
+              src="/assets/imgs/V.png"
+            ></image>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Button -->
+      <div class="footer">
+        <input
+          type="button"
+          class="next-btn"
+          value="{{currentIndex === totalCount - 1 ? '提交' : '下一题'}}"
+          onclick="handleNext"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  private: {
-    text: '快应用是什么？'
-  },
+import router from '@system.router'
+import testQuestions from '../../data/testQuestions.js'
+import prompt from '@system.prompt'
 
-  onWelcomeBtnClick() {
-    $utils.showToast('快应用：复杂生活的简单答案，让生活更顺畅')
+export default {
+  protected: {
+    category: '',
+    testId: 0
+  },
+  private: {
+    testTitle: '',
+    questions: [],
+    currentIndex: 0,
+    selectedOption: '',
+    totalCount: 0,
+    currentScore: 0,
+    currentTest: null
+  },
+  onInit() {
+    console.log('onInit category:', this.category, 'testId:', this.testId)
+
+    if (this.category && testQuestions[this.category]) {
+      const tests = testQuestions[this.category]
+      const test = tests[this.testId] || tests[0]
+
+      if (test) {
+        // 去掉"第一套："前缀，提取标题
+        this.testTitle =
+          test.title.replace(/第[一二三四五六七八九十]+套[：:.]?/, '') ||
+          test.title
+        this.questions = test.questions
+        this.totalCount = this.questions.length
+        this.currentTest = test
+      }
+    }
+  },
+  computed: {
+    currentQuestion() {
+      return this.questions[this.currentIndex] || {}
+    },
+    progressWidth() {
+      if (this.totalCount === 0) return 0
+      return ((this.currentIndex + 1) / this.totalCount) * 100
+    }
+  },
+  goBack() {
+    router.back()
+  },
+  selectOption(label) {
+    this.selectedOption = label
+  },
+  handleNext() {
+    if (!this.selectedOption) {
+      prompt.showToast({ message: '请选择一个选项' })
+      return
+    }
+
+    // Calculate score
+    const option = this.currentQuestion.options.find(
+      opt => opt.label === this.selectedOption
+    )
+    if (option) {
+      this.currentScore += option.score || 0
+    }
+
+    if (this.currentIndex < this.totalCount - 1) {
+      this.currentIndex++
+      this.selectedOption = ''
+    } else {
+      // Calculate Result
+      let resultLevel = '测试完成'
+      let resultDesc = '感谢您的参与。'
+
+      if (this.currentTest && this.currentTest.results) {
+        const result = this.currentTest.results.find(
+          r => this.currentScore >= r.min && this.currentScore <= r.max
+        )
+        if (result) {
+          resultLevel = result.title
+          resultDesc = result.desc
+        }
+      }
+
+      router.replace({
+        uri: '/pages/Result',
+        params: {
+          testTitle: this.testTitle,
+          resultLevel: resultLevel,
+          resultDesc: resultDesc
+        }
+      })
+    }
   }
 }
 </script>
@@ -37,27 +163,168 @@ export default {
 <style lang="scss">
 @import './../../assets/styles/style.scss';
 
-.wrapper {
-  @include flex-box-mixins(column, center, center);
-  margin: 0 16 * $size-factor;
-  .title {
-    font-size: 18 * $size-factor;
-    text-align: center;
-    color: $black;
-  }
-  .desc {
-    margin-top: 18 * $size-factor;
-    color: $grey;
-    font-size: 16 * $size-factor;
-  }
-  .btn {
-    width: 150 * $size-factor;
-    height: 42 * $size-factor;
-    border-radius: 21 * $size-factor;
-    background-color: $brand;
-    color: $white;
-    font-size: 16 * $size-factor;
-    margin-top: 20 * $size-factor;
-  }
+.page-container {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #ffffff;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.content {
+  flex: 1;
+  flex-direction: column;
+  padding: 0 40 * $size-factor;
+  padding-top: 60 * $size-factor;
+}
+
+.header {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 88 * $size-factor;
+  margin-bottom: 40 * $size-factor;
+}
+
+.back-btn {
+  width: 88 * $size-factor;
+  height: 88 * $size-factor;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.back-icon {
+  width: 30 * $size-factor;
+  height: 50 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 42 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+  text-overflow: ellipsis;
+  lines: 1;
+  flex: 1;
+  text-align: center;
+}
+
+.placeholder {
+  width: 88 * $size-factor;
+}
+
+.progress-section {
+  flex-direction: column;
+  margin-bottom: 80 * $size-factor;
+}
+
+.progress-info {
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 20 * $size-factor;
+}
+
+.current-index {
+  font-size: 48 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+}
+
+.total-count {
+  font-size: 32 * $size-factor;
+  color: #999999;
+  margin-left: 5 * $size-factor;
+  margin-bottom: 8 * $size-factor;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 16 * $size-factor;
+  background-color: #f5f5f5;
+  border-radius: 8 * $size-factor;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #90ff7e;
+  border-radius: 8 * $size-factor;
+}
+
+.question-card {
+  flex: 1;
+  flex-direction: column;
+}
+
+.question-text {
+  font-size: 44 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 80 * $size-factor;
+  line-height: 1.5;
+}
+
+.options-list {
+  flex-direction: column;
+}
+
+.option-item {
+  border: 2px solid #f5f5f5;
+  border-radius: 24 * $size-factor;
+  padding: 40 * $size-factor;
+  margin-bottom: 30 * $size-factor;
+  background-color: #ffffff;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative; // Add this for positioning check icon
+}
+
+.option-selected {
+  border-color: #000000;
+  border-width: 3px;
+  background-color: #f9fafb; // Optional: slight background change
+}
+
+.option-text {
+  font-size: 34 * $size-factor;
+  color: #333333;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.check-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  object-fit: contain;
+  // 移除 margin-left，使用 absolute positioning
+  border-bottom-right-radius: 20 * $size-factor; // Match border radius if needed
+}
+
+.footer {
+  margin-bottom: 60 * $size-factor;
+  margin-top: 40 * $size-factor;
+}
+
+.next-btn {
+  width: 100%;
+  height: 140 * $size-factor;
+  background-color: #d3ff18;
+  border-radius: 70 * $size-factor;
+  color: #000000;
+  font-size: 40 * $size-factor;
+  font-weight: bold;
 }
 </style>

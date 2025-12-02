@@ -1,0 +1,213 @@
+<template>
+  <div class="page-container">
+    <!-- 背景图 -->
+    <image class="bg-image" src="/assets/imgs/ceshi-bg-6.png"></image>
+    <!-- 装饰图 -->
+    <image class="decor-img" src="/assets/imgs/xuanzhuan.png"></image>
+
+    <div class="content">
+      <!-- Header -->
+      <div class="header">
+        <div class="back-btn" onclick="goBack">
+          <image class="back-icon" src="/assets/imgs/back.png"></image>
+        </div>
+        <text class="header-title">{{ testTitle }}</text>
+        <div class="placeholder"></div>
+      </div>
+
+      <!-- 结果卡片 -->
+      <div class="result-card">
+        <text class="result-title-label">测试结果</text>
+
+        <text class="result-level">{{ resultLevel }}</text>
+
+        <scroll class="result-desc-scroll">
+          <text class="result-desc">{{ resultDesc }}</text>
+        </scroll>
+      </div>
+
+      <!-- 底部按钮 -->
+      <div class="footer">
+        <input
+          type="button"
+          class="btn restart-btn"
+          value="重新测试"
+          onclick="restart"
+        />
+        <input
+          type="button"
+          class="btn home-btn"
+          value="返回首页"
+          onclick="goHome"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  protected: {
+    testTitle: '',
+    resultLevel: '',
+    resultDesc: ''
+  },
+  onInit() {
+    // 如果没有传参，显示默认值（调试用）
+    if (!this.resultLevel) {
+      this.testTitle = '情商测试'
+      this.resultLevel = '情商水平较高'
+      this.resultDesc =
+        '你的情商处于较高水平，在情绪管理、人际沟通和问题处理等方面表现出色...'
+    }
+  },
+  goBack() {
+    router.back()
+  },
+  restart() {
+    router.back()
+  },
+  goHome() {
+    router.clear()
+    router.push({
+      uri: '/pages/Demo'
+    })
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../assets/styles/style.scss';
+
+.page-container {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #f5f5f5;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 600 * $size-factor; // 覆盖上半部分
+  object-fit: cover;
+}
+
+.decor-img {
+  position: absolute;
+  top: 120 * $size-factor;
+  left: 50%;
+  margin-left: -150 * $size-factor; // 居中
+  width: 300 * $size-factor;
+  height: 300 * $size-factor;
+  object-fit: contain;
+}
+
+.content {
+  flex: 1;
+  flex-direction: column;
+  padding: 0 40 * $size-factor;
+  padding-top: 60 * $size-factor;
+}
+
+.header {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 88 * $size-factor;
+  margin-bottom: 350 * $size-factor; // 留出装饰图空间
+}
+
+.back-btn {
+  width: 88 * $size-factor;
+  height: 88 * $size-factor;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.back-icon {
+  width: 30 * $size-factor;
+  height: 50 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+}
+
+.placeholder {
+  width: 88 * $size-factor;
+}
+
+.result-card {
+  flex: 1;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 30 * $size-factor;
+  padding: 40 * $size-factor;
+  margin-bottom: 40 * $size-factor;
+  align-items: center;
+}
+
+.result-title-label {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 30 * $size-factor;
+}
+
+.result-level {
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 20 * $size-factor;
+  align-self: flex-start;
+}
+
+.result-desc-scroll {
+  flex: 1;
+  flex-direction: column;
+}
+
+.result-desc {
+  font-size: 28 * $size-factor;
+  color: #666666;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.footer {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 60 * $size-factor;
+}
+
+.btn {
+  width: 480 * $size-factor; // 约一半宽度
+  height: 120 * $size-factor;
+  border-radius: 20 * $size-factor;
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+}
+
+.restart-btn {
+  background-color: #333333;
+  color: #ffffff;
+  width: 45%;
+}
+
+.home-btn {
+  background-color: #d3ff18;
+  color: #000000;
+  width: 45%;
+}
+</style>
