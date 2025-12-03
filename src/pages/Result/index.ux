@@ -16,30 +16,23 @@
       </div>
 
       <!-- 结果卡片 -->
-      <div class="result-card">
-        <text class="result-title-label">测试结果</text>
-
-        <text class="result-level">{{ resultLevel }}</text>
-
-        <scroll class="result-desc-scroll">
+      <list class="scroll-content">
+        <list-item type="result" class="card">
+          <text class="card-title">测试结果</text>
+          <text class="result-level">{{ resultLevel }}</text>
           <text class="result-desc">{{ resultDesc }}</text>
-        </scroll>
-      </div>
+        </list-item>
+        <list-item type="spacer" class="spacer"></list-item>
+      </list>
 
       <!-- 底部按钮 -->
       <div class="footer">
-        <input
-          type="button"
-          class="btn restart-btn"
-          value="重新测试"
-          onclick="restart"
-        />
-        <input
-          type="button"
-          class="btn home-btn"
-          value="返回首页"
-          onclick="goHome"
-        />
+        <div class="btn restart-btn" onclick="restart">
+          <text class="btn-text-restart">重新测试</text>
+        </div>
+        <div class="btn home-btn" onclick="goHome">
+          <text class="btn-text-home">返回首页</text>
+        </div>
       </div>
     </div>
   </div>
@@ -119,102 +112,113 @@ export default {
 .content {
   flex: 1;
   flex-direction: column;
-  padding: 0 40 * $size-factor;
-  padding-top: 60 * $size-factor;
 }
 
 .header {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 88 * $size-factor;
-  margin-bottom: 350 * $size-factor; // 留出装饰图空
+  height: 100 * $size-factor;
+  padding: 0 30 * $size-factor;
+  margin-bottom: 20 * $size-factor;
 }
 
 .back-btn {
-  width: 88 * $size-factor;
-  height: 88 * $size-factor;
-  justify-content: flex-start;
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  justify-content: center;
   align-items: center;
 }
 
 .back-icon {
-  width: 30 * $size-factor;
-  height: 50 * $size-factor;
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
   object-fit: contain;
 }
 
 .header-title {
-  font-size: 36 * $size-factor;
+  font-size: 48 * $size-factor;
   font-weight: bold;
-  color: #000000;
-  text-align: center;
+  color: #333333;
 }
 
 .placeholder {
-  width: 88 * $size-factor;
+  width: 60 * $size-factor;
 }
 
-.result-card {
+.scroll-content {
   flex: 1;
-  flex-direction: column;
-  background-color: #ffffff;
-  border-radius: 30 * $size-factor;
-  padding: 40 * $size-factor;
-  margin-bottom: 40 * $size-factor;
-  align-items: center;
+  margin-top: 300 * $size-factor;
 }
 
-.result-title-label {
-  font-size: 36 * $size-factor;
+.card {
+  background-color: #ffffff;
+  border-top-left-radius: 40 * $size-factor;
+  border-top-right-radius: 40 * $size-factor;
+  padding: 60 * $size-factor 50 * $size-factor;
+  min-height: 600 * $size-factor;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 48 * $size-factor;
   font-weight: bold;
-  color: #000000;
-  margin-bottom: 30 * $size-factor;
+  color: #333333;
+  margin-bottom: 40 * $size-factor;
+  text-align: center;
 }
 
 .result-level {
-  font-size: 32 * $size-factor;
+  font-size: 50 * $size-factor;
   font-weight: bold;
-  color: #000000;
-  margin-bottom: 20 * $size-factor;
-  align-self: flex-start;
-}
-
-.result-desc-scroll {
-  flex: 1;
-  flex-direction: column;
+  color: #43a047;
+  margin-bottom: 40 * $size-factor;
 }
 
 .result-desc {
-  font-size: 28 * $size-factor;
-  color: #666666;
-  line-height: 1.6;
+  font-size: 40 * $size-factor;
+  color: #333333;
+  line-height: 64 * $size-factor;
   text-align: justify;
 }
 
 .footer {
+  padding: 40 * $size-factor;
+  padding-bottom: 80 * $size-factor;
+  background-color: #ffffff;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 60 * $size-factor;
 }
 
 .btn {
-  width: 480 * $size-factor; // 约一半宽
+  width: 320 * $size-factor;
   height: 120 * $size-factor;
-  border-radius: 20 * $size-factor;
-  font-size: 32 * $size-factor;
-  font-weight: bold;
+  border-radius: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
 }
 
 .restart-btn {
   background-color: #333333;
-  color: #ffffff;
-  width: 45%;
 }
 
 .home-btn {
-  background-color: #d3ff18;
-  color: #000000;
-  width: 45%;
+  background-color: #d4ff00;
+}
+
+.btn-text-restart {
+  color: #d4ff00;
+  font-size: 42 * $size-factor;
+  font-weight: bold;
+}
+
+.btn-text-home {
+  color: #333333;
+  font-size: 42 * $size-factor;
+  font-weight: bold;
+}
+
+.spacer {
+  height: 40 * $size-factor;
 }
 </style>
