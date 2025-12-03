@@ -16,13 +16,14 @@
     </div>
 
     <!-- 结果卡片 -->
-    <scroll class="scroll-content">
-      <div class="card">
+    <list class="scroll-content">
+      <list-item type="result" class="card">
         <text class="card-title">测试结果</text>
         <text class="result-level">{{ result.level }}</text>
         <text class="result-desc">{{ result.description }}</text>
-      </div>
-    </scroll>
+      </list-item>
+      <list-item type="spacer" class="spacer"></list-item>
+    </list>
 
     <!-- 底部按钮 -->
     <div class="footer">
@@ -156,7 +157,7 @@ export default {
 }
 
 .header-title {
-  font-size: 36 * $size-factor;
+  font-size: 48 * $size-factor;
   font-weight: bold;
   color: #333333;
 }
@@ -174,37 +175,37 @@ export default {
   background-color: #ffffff;
   border-top-left-radius: 40 * $size-factor;
   border-top-right-radius: 40 * $size-factor;
-  padding: 50 * $size-factor 40 * $size-factor;
+  padding: 60 * $size-factor 50 * $size-factor;
   min-height: 600 * $size-factor;
   flex-direction: column;
 }
 
 .card-title {
-  font-size: 40 * $size-factor;
+  font-size: 48 * $size-factor;
   font-weight: bold;
   color: #333333;
-  margin-bottom: 30 * $size-factor;
+  margin-bottom: 40 * $size-factor;
   text-align: center;
 }
 
 .result-level {
-  font-size: 36 * $size-factor;
+  font-size: 50 * $size-factor;
   font-weight: bold;
-  color: #333333;
-  margin-bottom: 30 * $size-factor;
+  color: #43a047;
+  margin-bottom: 40 * $size-factor;
   align-self: flex-start;
 }
 
 .result-desc {
-  font-size: 28 * $size-factor;
-  color: #444444;
-  line-height: 48 * $size-factor;
+  font-size: 40 * $size-factor;
+  color: #333333;
+  line-height: 64 * $size-factor;
   text-align: justify;
 }
 
 .footer {
-  padding: 30 * $size-factor 40 * $size-factor;
-  padding-bottom: 60 * $size-factor;
+  padding: 40 * $size-factor;
+  padding-bottom: 80 * $size-factor;
   background-color: #ffffff;
   flex-direction: row;
   justify-content: space-between;
@@ -212,8 +213,8 @@ export default {
 
 .btn {
   width: 320 * $size-factor;
-  height: 90 * $size-factor;
-  border-radius: 45 * $size-factor;
+  height: 120 * $size-factor;
+  border-radius: 60 * $size-factor;
   justify-content: center;
   align-items: center;
 }
@@ -228,13 +229,17 @@ export default {
 
 .btn-text-restart {
   color: #d4ff00;
-  font-size: 32 * $size-factor;
+  font-size: 42 * $size-factor;
   font-weight: bold;
 }
 
 .btn-text-home {
   color: #333333;
-  font-size: 32 * $size-factor;
+  font-size: 42 * $size-factor;
   font-weight: bold;
+}
+
+.spacer {
+  height: 40 * $size-factor;
 }
 </style>

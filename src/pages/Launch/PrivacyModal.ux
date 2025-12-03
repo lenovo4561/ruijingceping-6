@@ -9,14 +9,14 @@
           <text class="title">用户协议及隐私政策</text>
           <div class="agreement-content">
             <text class="context">
-              尊敬的用户：欢迎使用"瑞景测评"，在您使用前请仔细阅读<span class="link" onclick="openPrivacy">《隐私政策》</span>和<span class="link" onclick="openAgreement">《用户协议》</span>，我们将严格遵守您同意的各项条款使用您的信息，以便为您提供更好的服务。点击"同意"意味着您自愿遵守相关政策，我们将严格保护您的个人信息，确保信息安全。
+              <span>尊敬的用户：欢迎使用"</span><span class="highlight">瑞景测评</span><span>"，在您使用前请仔细阅读</span><a class="link" @click="openPrivacy">《隐私政策》</a><span>和</span><a class="link" @click="openAgreement">《用户协议》</a><span>，我们将严格遵守您同意的各项条款使用您的信息，以便为您提供更好的服务。点击"同意"意味着您自愿遵守相关政策，我们将严格保护您的个人信息，确保信息安全。</span>
             </text>
           </div>
           <div class="btn-group">
-            <div class="btn confirm-btn" onclick="agree">
+            <div class="btn confirm-btn" @click="agree">
               <text class="btn-text-white">同意并继续</text>
             </div>
-            <div class="btn reject-btn" onclick="refuse">
+            <div class="btn reject-btn" @click="refuse">
               <text class="btn-text-gray">不同意</text>
             </div>
           </div>
@@ -127,6 +127,10 @@ export default {
   color: #1976d2;
 }
 
+.highlight {
+  color: #1976d2;
+}
+
 .btn-group {
   width: 100%;
   flex-direction: column;
@@ -153,11 +157,8 @@ export default {
 }
 
 .wrapper {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: 0;
+  height: 0;
 }
 
 .btn-text-white {

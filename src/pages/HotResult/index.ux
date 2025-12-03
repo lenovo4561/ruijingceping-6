@@ -186,7 +186,7 @@ export default {
 }
 
 .header-title {
-  font-size: 36 * $size-factor;
+  font-size: 48 * $size-factor;
   font-weight: bold;
   color: #ffffff;
 }
@@ -202,17 +202,17 @@ export default {
 
 .card {
   margin: 0 30 * $size-factor;
-  padding: 40 * $size-factor;
+  padding: 50 * $size-factor;
   background-color: #ffffff;
-  border-radius: 30 * $size-factor;
+  border-radius: 40 * $size-factor;
   flex-direction: column;
 }
 
 .card-title {
-  font-size: 36 * $size-factor;
+  font-size: 48 * $size-factor;
   font-weight: bold;
   color: #333333;
-  margin-bottom: 30 * $size-factor;
+  margin-bottom: 40 * $size-factor;
 }
 
 .score-section {
@@ -220,51 +220,53 @@ export default {
   align-items: flex-end;
   justify-content: center;
   margin-bottom: 40 * $size-factor;
-  padding: 30 * $size-factor 0;
+  padding: 20 * $size-factor 0;
 }
 
 .score-label {
-  font-size: 28 * $size-factor;
+  font-size: 36 * $size-factor;
   color: #666666;
   margin-right: 20 * $size-factor;
+  margin-bottom: 26 * $size-factor;
 }
 
 .score-value {
-  font-size: 80 * $size-factor;
+  font-size: 150 * $size-factor;
   font-weight: bold;
   color: #43a047;
 }
 
 .score-unit {
-  font-size: 28 * $size-factor;
+  font-size: 36 * $size-factor;
   color: #666666;
   margin-left: 10 * $size-factor;
+  margin-bottom: 26 * $size-factor;
 }
 
 .result-section {
   flex-direction: column;
-  padding: 30 * $size-factor;
+  padding: 50 * $size-factor;
   background-color: #f9f9f9;
-  border-radius: 20 * $size-factor;
+  border-radius: 30 * $size-factor;
 }
 
 .result-level {
-  font-size: 36 * $size-factor;
+  font-size: 50 * $size-factor;
   font-weight: bold;
   color: #43a047;
-  margin-bottom: 20 * $size-factor;
+  margin-bottom: 30 * $size-factor;
 }
 
 .result-desc {
-  font-size: 28 * $size-factor;
-  color: #666666;
-  line-height: 48 * $size-factor;
+  font-size: 40 * $size-factor;
+  color: #333333;
+  line-height: 64 * $size-factor;
   text-align: justify;
 }
 
 .footer {
-  padding: 30 * $size-factor 40 * $size-factor;
-  padding-bottom: 60 * $size-factor;
+  padding: 40 * $size-factor;
+  padding-bottom: 80 * $size-factor;
   background-color: #ffffff;
   flex-direction: row;
   justify-content: space-between;
@@ -272,8 +274,8 @@ export default {
 
 .btn {
   width: 320 * $size-factor;
-  height: 90 * $size-factor;
-  border-radius: 45 * $size-factor;
+  height: 120 * $size-factor;
+  border-radius: 60 * $size-factor;
   justify-content: center;
   align-items: center;
 }
@@ -288,13 +290,13 @@ export default {
 
 .btn-text-restart {
   color: #d4ff00;
-  font-size: 32 * $size-factor;
+  font-size: 42 * $size-factor;
   font-weight: bold;
 }
 
 .btn-text-home {
   color: #333333;
-  font-size: 32 * $size-factor;
+  font-size: 42 * $size-factor;
   font-weight: bold;
 }
 </style>

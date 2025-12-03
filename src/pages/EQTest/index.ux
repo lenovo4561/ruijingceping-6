@@ -30,7 +30,7 @@
       <!-- 选项 -->
       <div class="options-list">
         <div
-          class="option-item {{selectedOptionIndex === $idx ? 'option-selected' : ''}}"
+          class="option-item {{selectedOptionIndex === index ? 'option-selected' : ''}}"
           for="{{(index, item) in currentQuestion.options}}"
           onclick="selectOption(index)"
         >
@@ -221,7 +221,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 30 * $size-factor;
-  border: 2px solid #eeeeee;
+  border: 4px solid #eeeeee;
   border-radius: 20 * $size-factor;
   margin-bottom: 30 * $size-factor;
   background-color: #ffffff;
@@ -230,7 +230,7 @@ export default {
 
 .option-selected {
   border-color: #333333;
-  background-color: #f9fbe7; /* Light lime tint */
+  background-color: #ffffff;
 }
 
 .option-text {
