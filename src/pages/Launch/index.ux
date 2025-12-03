@@ -2,9 +2,9 @@
 
 <template>
   <div class="container">
-    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
     <div class="content">
-      <image class="logo" src="/assets/imgs/logo.png"></image>
+      <image class="logo" src="/assets/images/logo.png"></image>
     </div>
     
     <privacy-modal show="{{showPrivacy}}" onagree-evt="handleAgree"></privacy-modal>
@@ -14,6 +14,7 @@
 <script>
 import router from '@system.router'
 import storage from '@system.storage'
+import { initUser } from '../../helper/init'
 
 export default {
   private: {
@@ -25,7 +26,9 @@ export default {
       key: 'agreed_privacy',
       success: (data) => {
         if (data === 'true') {
-          // 已同意，延迟跳转
+          // 已同意，发起用户初始化请
+          initUser()
+          // 延迟跳转
           setTimeout(() => {
             this.goHome()
           }, 2000)
@@ -41,11 +44,13 @@ export default {
   },
   handleAgree() {
     this.showPrivacy = false
-    // 保存同意状态
+    // 保存同意状
     storage.set({
       key: 'agreed_privacy',
       value: 'true'
     })
+    // 发起用户初始化请
+    initUser()
     this.goHome()
   },
   goHome() {
@@ -65,6 +70,7 @@ export default {
   justify-content: center;
   width: 100%;
   height: 100%;
+  background-color: #f5f5dc;
 }
 
 .bg-image {

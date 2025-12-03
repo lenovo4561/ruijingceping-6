@@ -1,34 +1,36 @@
 <template>
   <div class="page-container">
+    <!-- 顶部背景区域 -->
+    <div class="top-bg-section">
+      <image class="bg-image" src="/pages/Demo/assets/imgs/ceshi-bg-6.png"></image>
+      <image class="star-image" src="/pages/Demo/assets/imgs/xuanzhuan.png"></image>
+    </div>
+
+    <!-- Header -->
     <div class="header">
       <div class="back-btn" onclick="goBack">
-        <image class="back-icon" src="/assets/imgs/back.png"></image>
+        <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
       </div>
       <text class="header-title">情商测试</text>
       <div class="placeholder"></div>
     </div>
 
+    <!-- 结果卡片 -->
     <scroll class="scroll-content">
-      <div class="content">
-        <!-- 星星装饰/图片 -->
-        <image class="result-img" src="/assets/imgs/result-star.png"></image>
-
-        <div class="card">
-          <text class="card-title">测试结果</text>
-
-          <text class="result-level">{{ result.level }}</text>
-
-          <text class="result-desc">{{ result.description }}</text>
-        </div>
+      <div class="card">
+        <text class="card-title">测试结果</text>
+        <text class="result-level">{{ result.level }}</text>
+        <text class="result-desc">{{ result.description }}</text>
       </div>
     </scroll>
 
+    <!-- 底部按钮 -->
     <div class="footer">
       <div class="btn restart-btn" onclick="restart">
-        <text class="btn-text-white">重新测试</text>
+        <text class="btn-text-restart">重新测试</text>
       </div>
       <div class="btn home-btn" onclick="goHome">
-        <text class="btn-text-black">返回首页</text>
+        <text class="btn-text-home">返回首页</text>
       </div>
     </div>
   </div>
@@ -36,29 +38,46 @@
 
 <script>
 import router from '@system.router'
-import eqData from '../../data/eq_test.json'
+import eqData from '../Demo/data/eqData.js'
 
 export default {
-  protected: {
-    score: 0
-  },
   data: {
-    result: {}
+    score: 0,
+    currentScore: 0,
+    result: {
+      level: '加载..',
+      description: '数据加载..'
+    }
   },
   onInit() {
+    // 从路由参数获
+    if (this.$page && this.$page.query && this.$page.query.score) {
+      this.score = this.$page.query.score
+    }
+    this.currentScore = this.score || 0
     this.calculateResult()
   },
   calculateResult() {
-    const score = parseInt(this.score) || 0
-    const results = eqData.results
-
-    let match = results.find(r => score >= r.minScore && score <= r.maxScore)
-    if (!match) {
-      // Fallback or boundary check
-      if (score < 10) match = results[0]
-      else match = results[results.length - 1]
+    const score = parseInt(this.currentScore) || 0
+    
+    let match = null
+    if (eqData && eqData.results) {
+      const results = eqData.results
+      match = results.find(r => score >= r.minScore && score <= r.maxScore)
+      if (!match && results.length > 0) {
+        if (score < results[0].minScore) match = results[0]
+        else match = results[results.length - 1]
+      }
     }
-    this.result = match || {}
+
+    if (match) {
+      this.result = match
+    } else {
+      this.result = {
+        level: '未知等级',
+        description: '暂无详细描述，请检查数据源。'
+      }
+    }
   },
   goBack() {
     router.back()
@@ -69,7 +88,6 @@ export default {
     })
   },
   goHome() {
-    router.clear()
     router.replace({
       uri: '/pages/Demo'
     })
@@ -84,7 +102,36 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: #f5f5ff; /* Light purple/blue tint from screenshot */
+  background-color: #f5f5f5;
+}
+
+/* 顶部背景区域 */
+.top-bg-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500 * $size-factor;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.star-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -150 * $size-factor;
+  margin-left: -150 * $size-factor;
+  width: 300 * $size-factor;
+  height: 300 * $size-factor;
+  object-fit: contain;
 }
 
 .header {
@@ -93,6 +140,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 30 * $size-factor;
+  position: relative;
 }
 
 .back-btn {
@@ -120,29 +168,16 @@ export default {
 
 .scroll-content {
   flex: 1;
-}
-
-.content {
-  flex-direction: column;
-  align-items: center;
-  padding: 30 * $size-factor;
-  padding-bottom: 100 * $size-factor;
-}
-
-.result-img {
-  width: 300 * $size-factor;
-  height: 300 * $size-factor;
-  object-fit: contain;
-  margin-bottom: 40 * $size-factor;
+  margin-top: 380 * $size-factor;
 }
 
 .card {
   background-color: #ffffff;
-  border-radius: 30 * $size-factor;
-  padding: 40 * $size-factor;
-  width: 100%;
+  border-top-left-radius: 40 * $size-factor;
+  border-top-right-radius: 40 * $size-factor;
+  padding: 50 * $size-factor 40 * $size-factor;
+  min-height: 600 * $size-factor;
   flex-direction: column;
-  align-items: center;
 }
 
 .card-title {
@@ -150,25 +185,25 @@ export default {
   font-weight: bold;
   color: #333333;
   margin-bottom: 30 * $size-factor;
+  text-align: center;
 }
 
 .result-level {
   font-size: 36 * $size-factor;
   font-weight: bold;
   color: #333333;
-  margin-bottom: 20 * $size-factor;
-  align-self: flex-start;
+  margin-bottom: 30 * $size-factor;
 }
 
 .result-desc {
   font-size: 28 * $size-factor;
-  color: #666666;
+  color: #444444;
   line-height: 48 * $size-factor;
   text-align: justify;
 }
 
 .footer {
-  padding: 30 * $size-factor;
+  padding: 30 * $size-factor 40 * $size-factor;
   padding-bottom: 60 * $size-factor;
   background-color: #ffffff;
   flex-direction: row;
@@ -176,9 +211,9 @@ export default {
 }
 
 .btn {
-  width: 330 * $size-factor;
-  height: 100 * $size-factor;
-  border-radius: 50 * $size-factor;
+  width: 320 * $size-factor;
+  height: 90 * $size-factor;
+  border-radius: 45 * $size-factor;
   justify-content: center;
   align-items: center;
 }
@@ -191,13 +226,13 @@ export default {
   background-color: #d4ff00;
 }
 
-.btn-text-white {
-  color: #ffffff;
+.btn-text-restart {
+  color: #d4ff00;
   font-size: 32 * $size-factor;
   font-weight: bold;
 }
 
-.btn-text-black {
+.btn-text-home {
   color: #333333;
   font-size: 32 * $size-factor;
   font-weight: bold;

@@ -23,7 +23,8 @@
     "mammoth": "^1.11.0",
     "onchange": "^5.2.0",
     "prettier": "^1.15.3",
-    "prettier-plugin-ux": "^0.3.0"
+    "prettier-plugin-ux": "^0.3.0",
+    "sharp": "^0.34.5"
   },
   "prettier": {
     "singleQuote": true,

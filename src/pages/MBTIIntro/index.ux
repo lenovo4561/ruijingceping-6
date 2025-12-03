@@ -1,0 +1,162 @@
+<template>
+  <div class="page-container">
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
+    <div class="header">
+      <div class="back-btn" onclick="goBack">
+        <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
+      </div>
+      <text class="header-title">MBTI测试</text>
+      <div class="placeholder"></div>
+    </div>
+
+    <div class="content">
+      <!-- 顶部圆形卡通区-->
+      <div class="bubble-container">
+        <image class="bubble-bg" src="/pages/Demo/assets/imgs/tupian.png"></image>
+      </div>
+
+      <!-- 介绍卡片 -->
+      <div class="intro-card">
+        <text class="intro-text">
+          MBTI是全球最流行的人格测评工具之一其核心是通过 4 组对立的心理偏好，将人格划分16 种独特类型，帮助人们理解自身思维、行为模式及与他人的差异
+        </text>
+      </div>
+
+      <!-- 开始按-->
+      <div class="start-btn" onclick="startTest">
+        <text class="btn-text">开始测</text>
+      </div>
+
+      <!-- 底部说明 -->
+      <text class="footer-note">
+        MBTI16 种人格类型，组“二选一”的心理偏好组合而成，每组维度代表一种稳定的心理倾向，不存在“优劣之分”，仅反映不同的“做事风格”
+      </text>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  goBack() {
+    router.back()
+  },
+  startTest() {
+    router.push({
+      uri: '/pages/MBTITest'
+    })
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../assets/styles/style.scss';
+
+.page-container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.header {
+  height: 100 * $size-factor;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30 * $size-factor;
+}
+
+.back-btn {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 30 * $size-factor;
+  height: 50 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+}
+
+.placeholder {
+  width: 60 * $size-factor;
+}
+
+.content {
+  flex: 1;
+  flex-direction: column;
+  padding: 0 40 * $size-factor;
+  align-items: center;
+}
+
+.bubble-container {
+  width: 100%;
+  height: 600 * $size-factor;
+  position: relative;
+  margin-bottom: 40 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.bubble-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.intro-card {
+  width: 100%;
+  background-color: #fafff0; /* 浅黄背景 */
+  border-radius: 20 * $size-factor;
+  padding: 40 * $size-factor;
+  margin-bottom: 60 * $size-factor;
+}
+
+.intro-text {
+  font-size: 32 * $size-factor;
+  color: #333333;
+  line-height: 56 * $size-factor;
+  text-align: justify;
+}
+
+.start-btn {
+  width: 100%;
+  height: 120 * $size-factor;
+  background-color: #ccff00; /* 荧光黄按*/
+  border-radius: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100 * $size-factor;
+}
+
+.btn-text {
+  font-size: 40 * $size-factor;
+  font-weight: bold;
+  color: #000000;
+}
+
+.footer-note {
+  font-size: 26 * $size-factor;
+  color: #999999;
+  line-height: 46 * $size-factor;
+  text-align: justify;
+}
+</style>

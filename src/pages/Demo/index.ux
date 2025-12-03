@@ -13,12 +13,12 @@
       <mine if="{{currentTab === 3}}"></mine>
     </div>
 
-    <!-- 底部导航栏 -->
+    <!-- 底部导航-->
     <div class="nav-bar">
       <div class="nav-item" onclick="switchTab(0)">
         <image
           class="nav-icon"
-          src="{{currentTab === 0 ? '/assets/imgs/ceping-s.png' : '/assets/imgs/ceping-u.png'}}"
+          src="{{currentTab === 0 ? '/pages/Demo/assets/imgs/ceping-s.png' : '/pages/Demo/assets/imgs/ceping-u.png'}}"
         ></image>
         <text class="nav-text {{currentTab === 0 ? 'nav-text-active' : ''}}"
           >测评</text
@@ -27,7 +27,7 @@
       <div class="nav-item" onclick="switchTab(1)">
         <image
           class="nav-icon"
-          src="{{currentTab === 1 ? '/assets/imgs/fenlei-s.png' : '/assets/imgs/fenlei-u.png'}}"
+          src="{{currentTab === 1 ? '/pages/Demo/assets/imgs/fenlei-s.png' : '/pages/Demo/assets/imgs/fenlei-u.png'}}"
         ></image>
         <text class="nav-text {{currentTab === 1 ? 'nav-text-active' : ''}}"
           >分类</text
@@ -36,7 +36,7 @@
       <div class="nav-item" onclick="switchTab(2)">
         <image
           class="nav-icon"
-          src="{{currentTab === 2 ? '/assets/imgs/changshi-s.png' : '/assets/imgs/changshi-u.png'}}"
+          src="{{currentTab === 2 ? '/pages/Demo/assets/imgs/changshi-s.png' : '/pages/Demo/assets/imgs/changshi-u.png'}}"
         ></image>
         <text class="nav-text {{currentTab === 2 ? 'nav-text-active' : ''}}"
           >常识</text
@@ -45,7 +45,7 @@
       <div class="nav-item" onclick="switchTab(3)">
         <image
           class="nav-icon"
-          src="{{currentTab === 3 ? '/assets/imgs/mine-s.png' : '/assets/imgs/mine-u.png'}}"
+          src="{{currentTab === 3 ? '/pages/Demo/assets/imgs/mine-s.png' : '/pages/Demo/assets/imgs/mine-u.png'}}"
         ></image>
         <text class="nav-text {{currentTab === 3 ? 'nav-text-active' : ''}}"
           >我的</text

@@ -23,6 +23,9 @@
     },
     {
       "name": "system.webview"
+    },
+    {
+      "name": "system.device"
     }
   ],
   "permissions": [
@@ -33,8 +36,14 @@
   "template/official": "demo-template",
   "config": {
     "logLevel": "debug",
-    "designWidth": 1080
+    "designWidth": 250
   },
+  "subpackages": [
+    {
+      "name": "demo",
+      "resource": "pages/Demo"
+    }
+  ],
   "router": {
     "entry": "pages/Launch",
     "pages": {
@@ -71,7 +80,16 @@
       "pages/MBTITest": {
         "component": "index"
       },
+      "pages/MBTIIntro": {
+        "component": "index"
+      },
       "pages/MBTIResult": {
+        "component": "index"
+      },
+      "pages/HotTest": {
+        "component": "index"
+      },
+      "pages/HotResult": {
         "component": "index"
       }
     }

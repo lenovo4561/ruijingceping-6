@@ -6,6 +6,6 @@ $grey: #9393aa;
 $red: #fa0101;
 $yellow: #ffff00;
 
-// $size-factor 为 1px，对应的 designWidth 为 1080
-// 样式值直接使用 1080 设计稿的像素值
-$size-factor: 1px; 
+// $size-factor 换算系数，对应的 designWidth 为 250
+// 样式值使用 1080 设计稿的像素值，乘以此系数自动换算
+$size-factor: 0.2315px;

@@ -1,29 +1,29 @@
 <template>
   <div class="page-container">
-    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
 
     <div class="content">
       <!-- 顶部 Header -->
       <div class="header">
-        <image class="header-icon" src="/assets/imgs/loading-icon.png"></image>
+        <image class="header-icon" src="/pages/Demo/assets/imgs/loading-icon.png"></image>
         <text class="header-title">瑞景测评</text>
       </div>
 
       <!-- Banner -->
       <div class="banner-wrap" onclick="goMBTITest">
-        <image class="banner-img" src="/assets/imgs/banner.png"></image>
+        <image class="banner-img" src="/pages/Demo/assets/imgs/banner.png"></image>
       </div>
 
       <!-- 智商/情商 Grid -->
       <div class="grid-section">
         <image
           class="grid-item"
-          src="/assets/imgs/zhishang.png"
+          src="/pages/Demo/assets/imgs/zhishang.png"
           onclick="goIQTest"
         ></image>
         <image
           class="grid-item"
-          src="/assets/imgs/qingshang.png"
+          src="/pages/Demo/assets/imgs/qingshang.png"
           onclick="goEQTest"
         ></image>
       </div>
@@ -32,20 +32,20 @@
       <div class="hot-section">
         <div class="section-header">
           <text class="section-title">热门测评</text>
-          <image class="section-icon" src="/assets/imgs/yanjing.png"></image>
+          <image class="section-icon" src="/pages/Demo/assets/imgs/yanjing.png"></image>
         </div>
 
         <!-- 列表 -->
         <list class="hot-list">
-          <list-item type="hot-item" class="hot-item" for="{{hotList}}">
+          <list-item type="hot-item" class="hot-item" for="{{hotList}}" onclick="goHotTest($item.id)">
             <text class="item-title">{{ $item.title }}</text>
             <div class="item-info">
               <div class="rating">
-                <text class="rating-text">推荐指数：</text>
+                <text class="rating-text">推荐指数</text>
                 <div class="stars">
                   <image
                     class="star-icon"
-                    src="/assets/imgs/pingjia-xing.png"
+                    src="/pages/Demo/assets/imgs/pingjia-xing.png"
                     for="{{[1,2,3,4,5]}}"
                   ></image>
                 </div>
@@ -62,12 +62,15 @@
 </template>
 
 <script>
-import hotTests from '../../../data/hotTests.js'
+import hotTests from '../data/hotTests.js'
 import router from '@system.router'
 
 export default {
   data: {
-    hotList: hotTests
+    hotList: []
+  },
+  onInit() {
+    this.hotList = hotTests
   },
   goIQTest() {
     router.push({
@@ -81,7 +84,16 @@ export default {
   },
   goMBTITest() {
     router.push({
-      uri: '/pages/MBTITest'
+      uri: '/pages/MBTIIntro'
+    })
+  },
+  goHotTest(testId) {
+    console.log('goHotTest called with testId:', testId)
+    router.push({
+      uri: '/pages/HotTest',
+      params: {
+        testId: String(testId)
+      }
     })
   }
 }
@@ -180,7 +192,7 @@ export default {
 
 .section-icon {
   width: 60 * $size-factor;
-  height: 30 * $size-factor;
+  height: 36 * $size-factor;
   object-fit: contain;
 }
 

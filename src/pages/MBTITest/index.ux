@@ -1,8 +1,9 @@
 <template>
   <div class="page-container">
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
     <div class="header">
       <div class="back-btn" onclick="goBack">
-        <image class="back-icon" src="/assets/imgs/back.png"></image>
+        <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
       </div>
       <text class="header-title">MBTI测试</text>
       <div class="placeholder"></div>
@@ -37,7 +38,7 @@
           <image
             if="{{selectedOption === item.label}}"
             class="check-icon"
-            src="/assets/imgs/check.png"
+            src="/pages/Demo/assets/imgs/V.png"
           ></image>
         </div>
       </div>
@@ -67,103 +68,119 @@
       <div class="mbti-grid">
         <!-- 守护者 -->
         <div class="mbti-row">
-          <text class="row-label">守护者</text>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/1、物流师 1.png"></image>
-            <text class="mbti-name">ISTJ(物流师)</text>
+          <div class="label-box label-guardians">
+            <text class="row-label-text">守护者</text>
           </div>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/2、守护者 1.png"></image>
-            <text class="mbti-name">ISFJ(守护者)</text>
-          </div>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/3、总经理 1.png"></image>
-            <text class="mbti-name">ESTJ(总经理)</text>
-          </div>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/4、执政官 1.png"></image>
-            <text class="mbti-name">ESFJ(执政官)</text>
+          <div class="items-row">
+            <div class="mbti-item">
+              <text class="mbti-name text-guardians">ISTJ(物流师)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-istj.png"></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-guardians">ISFJ(守护者)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-isfj.png"></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-guardians">ESTJ(总经理)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-estj.png"></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-guardians">ESFJ(执政官)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-esfj.png"></image>
+            </div>
           </div>
         </div>
         <!-- 探险家 -->
         <div class="mbti-row">
-          <text class="row-label">探险家</text>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/5、鉴赏家 1.png"></image>
-            <text class="mbti-name">ISTP(鉴赏家)</text>
+          <div class="label-box label-explorers">
+            <text class="row-label-text">探险家</text>
           </div>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/6、探险家 1.png"></image>
-            <text class="mbti-name">ISFP(探险家)</text>
-          </div>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/7、企业家 1.png"></image>
-            <text class="mbti-name">ESTP(企业家)</text>
-          </div>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/8、表演者 1.png"></image>
-            <text class="mbti-name">ESFP(表演者)</text>
+          <div class="items-row">
+            <div class="mbti-item">
+              <text class="mbti-name text-explorers">ISTP(鉴赏家)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-istp.png"></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-explorers">ISFP(探险家)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-isfp.png"></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-explorers">ESTP(企业家)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-estp.png"></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-explorers">ESFP(表演者)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-esfp.png"></image>
+            </div>
           </div>
         </div>
         <!-- 理想主义 -->
         <div class="mbti-row">
-          <text class="row-label">理想主义</text>
-          <div class="mbti-item">
-            <image class="mbti-img" src="/assets/img_s/9、提倡者 1.png"></image>
-            <text class="mbti-name">INFJ(提倡者)</text>
+          <div class="label-box label-idealists">
+            <text class="row-label-text">理想主义</text>
           </div>
-          <div class="mbti-item">
-            <image
-              class="mbti-img"
-              src="/assets/img_s/10、调停者 1.png"
-            ></image>
-            <text class="mbti-name">INFP(调停者)</text>
-          </div>
-          <div class="mbti-item">
-            <image
-              class="mbti-img"
-              src="/assets/img_s/11、主人公 1.png"
-            ></image>
-            <text class="mbti-name">ENFJ(主人公)</text>
-          </div>
-          <div class="mbti-item">
-            <image
-              class="mbti-img"
-              src="/assets/img_s/12、竞选者 1.png"
-            ></image>
-            <text class="mbti-name">ENFP(竞选者)</text>
+          <div class="items-row">
+            <div class="mbti-item">
+              <text class="mbti-name text-idealists">INFJ(提倡者)</text>
+              <image class="mbti-img" src="/pages/Demo/assets/img_s/mbti-infj.png"></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-idealists">INFP(调停者)</text>
+              <image
+                class="mbti-img"
+                src="/pages/Demo/assets/img_s/mbti-infp.png"
+              ></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-idealists">ENFJ(主人公)</text>
+              <image
+                class="mbti-img"
+                src="/pages/Demo/assets/img_s/mbti-enfj.png"
+              ></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-idealists">ENFP(竞选者)</text>
+              <image
+                class="mbti-img"
+                src="/pages/Demo/assets/img_s/mbti-enfp.png"
+              ></image>
+            </div>
           </div>
         </div>
         <!-- 理性者 -->
         <div class="mbti-row">
-          <text class="row-label">理性者</text>
-          <div class="mbti-item">
-            <image
-              class="mbti-img"
-              src="/assets/img_s/13、战略家 1.png"
-            ></image>
-            <text class="mbti-name">INTJ(战略家)</text>
+          <div class="label-box label-rationals">
+            <text class="row-label-text">理性者</text>
           </div>
-          <div class="mbti-item">
-            <image
-              class="mbti-img"
-              src="/assets/img_s/14、逻辑学家 1.png"
-            ></image>
-            <text class="mbti-name">INTP(逻辑学家)</text>
-          </div>
-          <div class="mbti-item">
-            <image
-              class="mbti-img"
-              src="/assets/img_s/15、指挥官 1.png"
-            ></image>
-            <text class="mbti-name">ENTJ(指挥官)</text>
-          </div>
-          <div class="mbti-item">
-            <image
-              class="mbti-img"
-              src="/assets/img_s/16、辩论家 1.png"
-            ></image>
-            <text class="mbti-name">ENTP(辩论家)</text>
+          <div class="items-row">
+            <div class="mbti-item">
+              <text class="mbti-name text-rationals">INTJ(战略家)</text>
+              <image
+                class="mbti-img"
+                src="/pages/Demo/assets/img_s/mbti-intj.png"
+              ></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-rationals">INTP(逻辑学家)</text>
+              <image
+                class="mbti-img"
+                src="/pages/Demo/assets/img_s/mbti-intp.png"
+              ></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-rationals">ENTJ(指挥官)</text>
+              <image
+                class="mbti-img"
+                src="/pages/Demo/assets/img_s/mbti-entj.png"
+              ></image>
+            </div>
+            <div class="mbti-item">
+              <text class="mbti-name text-rationals">ENTP(辩论家)</text>
+              <image
+                class="mbti-img"
+                src="/pages/Demo/assets/img_s/mbti-entp.png"
+              ></image>
+            </div>
           </div>
         </div>
       </div>
@@ -173,7 +190,7 @@
 
 <script>
 import router from '@system.router'
-import mbtiTestData from '../../data/mbtiTestData.js'
+import mbtiTestData from '../Demo/data/mbtiTestData.js'
 
 export default {
   data: {
@@ -229,7 +246,7 @@ export default {
 
     if (this.currentIndex < this.totalCount - 1) {
       this.currentIndex++
-      // 恢复之前的选择或清空
+      // 恢复之前的选择或清
       const nextAnswer = this.answers[this.currentIndex]
       this.selectedOption = nextAnswer || ''
     } else {
@@ -242,7 +259,7 @@ export default {
     const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 }
     const dimensions = mbtiTestData.dimensions
 
-    // 遍历所有答案计算得分
+    // 遍历所有答案计算得
     for (let i = 0; i < this.totalCount; i++) {
       const answer = this.answers[i]
       const question = this.questions[i]
@@ -285,7 +302,16 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: #f5f5f5;
+  position: relative;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 }
 
 .header {
@@ -294,7 +320,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 30 * $size-factor;
-  background-color: #ffffff;
 }
 
 .back-btn {
@@ -382,6 +407,7 @@ export default {
   border-radius: 16 * $size-factor;
   margin-bottom: 20 * $size-factor;
   background-color: #ffffff;
+  position: relative;
 }
 
 .option-selected {
@@ -398,6 +424,9 @@ export default {
 .check-icon {
   width: 40 * $size-factor;
   height: 40 * $size-factor;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .btn-row {
@@ -460,16 +489,40 @@ export default {
 
 .mbti-row {
   flex-direction: row;
-  align-items: center;
-  margin-bottom: 15 * $size-factor;
+  margin-bottom: 20 * $size-factor;
 }
 
-.row-label {
-  width: 80 * $size-factor;
+.label-box {
+  width: 50 * $size-factor;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10 * $size-factor;
+}
+
+.row-label-text {
   font-size: 22 * $size-factor;
-  color: #7cb342;
+  color: #ffffff;
   writing-mode: vertical-rl;
   text-align: center;
+}
+
+.label-guardians {
+  background-color: #26a69a;
+}
+.label-explorers {
+  background-color: #d4a017;
+}
+.label-idealists {
+  background-color: #66bb6a;
+}
+.label-rationals {
+  background-color: #8e24aa;
+}
+
+.items-row {
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .mbti-item {
@@ -479,15 +532,29 @@ export default {
 }
 
 .mbti-img {
-  width: 120 * $size-factor;
-  height: 120 * $size-factor;
+  width: 160 * $size-factor;
+  height: 160 * $size-factor;
   object-fit: contain;
-  margin-bottom: 5 * $size-factor;
 }
 
 .mbti-name {
-  font-size: 18 * $size-factor;
-  color: #666666;
+  font-size: 20 * $size-factor;
+  margin-bottom: 10 * $size-factor;
   text-align: center;
+  lines: 1;
+  text-overflow: ellipsis;
+}
+
+.text-guardians {
+  color: #26a69a;
+}
+.text-explorers {
+  color: #d4a017;
+}
+.text-idealists {
+  color: #66bb6a;
+}
+.text-rationals {
+  color: #8e24aa;
 }
 </style>

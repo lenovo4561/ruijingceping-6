@@ -1,8 +1,9 @@
 <template>
   <div class="page-container">
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
     <div class="header">
       <div class="back-btn" onclick="goBack">
-        <image class="back-icon" src="/assets/imgs/back.png"></image>
+        <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
       </div>
       <text class="header-title">情商测试</text>
       <div class="placeholder"></div>
@@ -37,7 +38,7 @@
           <image
             if="{{selectedOptionIndex === index}}"
             class="check-icon"
-            src="/assets/imgs/V.png"
+            src="/pages/Demo/assets/imgs/V.png"
           ></image>
         </div>
       </div>
@@ -49,9 +50,7 @@
         class="next-btn {{selectedOptionIndex === -1 ? 'btn-disabled' : ''}}"
         onclick="nextQuestion"
       >
-        <text class="next-text">{{
-          currentIndex === totalCount - 1 ? '查看结果' : '下一题'
-        }}</text>
+        <text class="next-text">{{ currentIndex === totalCount - 1 ? '查看结果' : '下一题' }}</text>
       </div>
     </div>
   </div>
@@ -59,7 +58,7 @@
 
 <script>
 import router from '@system.router'
-import eqData from '../../data/eq_test.json'
+import eqData from '../Demo/data/eqData.js'
 
 export default {
   data: {
@@ -119,7 +118,16 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
+  position: relative;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 }
 
 .header {
@@ -128,8 +136,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 30 * $size-factor;
-  /* border-bottom-width: 1px;
-  border-bottom-color: #eeeeee; */
 }
 
 .back-btn {
@@ -173,7 +179,7 @@ export default {
 }
 
 .current-idx {
-  font-size: 48 * $size-factor;
+  font-size: 36 * $size-factor;
   font-weight: bold;
   color: #333333;
 }
@@ -181,29 +187,29 @@ export default {
 .total-idx {
   font-size: 28 * $size-factor;
   color: #999999;
-  margin-bottom: 8 * $size-factor;
+  margin-bottom: 5 * $size-factor;
   margin-left: 5 * $size-factor;
 }
 
 .progress-bar-bg {
   width: 100%;
-  height: 12 * $size-factor;
+  height: 16 * $size-factor;
   background-color: #f0f0f0;
-  border-radius: 6 * $size-factor;
+  border-radius: 8 * $size-factor;
 }
 
 .progress-bar-fill {
   height: 100%;
-  background-color: #d4ff00; /* Match screenshot yellowish/lime color */
-  border-radius: 6 * $size-factor;
+  background: linear-gradient(to right, #aeea00, #d4ff00); /* Lime/Green gradient */
+  border-radius: 8 * $size-factor;
 }
 
 .question-title {
-  font-size: 36 * $size-factor;
+  font-size: 34 * $size-factor;
   font-weight: bold;
   color: #333333;
   line-height: 54 * $size-factor;
-  margin-bottom: 60 * $size-factor;
+  margin-bottom: 50 * $size-factor;
 }
 
 .options-list {
@@ -211,10 +217,12 @@ export default {
 }
 
 .option-item {
-  flex-direction: column; /* Allow multiline text */
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   padding: 30 * $size-factor;
-  border: 1px solid #eeeeee;
-  border-radius: 16 * $size-factor;
+  border: 2px solid #eeeeee;
+  border-radius: 20 * $size-factor;
   margin-bottom: 30 * $size-factor;
   background-color: #ffffff;
   position: relative;
@@ -222,24 +230,22 @@ export default {
 
 .option-selected {
   border-color: #333333;
-  border-width: 2px;
+  background-color: #f9fbe7; /* Light lime tint */
 }
 
 .option-text {
   font-size: 30 * $size-factor;
   color: #333333;
   line-height: 44 * $size-factor;
+  flex: 1;
 }
 
 .check-icon {
-  position: absolute;
-  right: 0;
-  bottom: 0;
   width: 40 * $size-factor;
   height: 40 * $size-factor;
-  background-color: #333333;
-  /* Assuming the checkmark is white on dark bg or similar from screenshot */
-  /* Actually screenshot shows a black triangle corner with checkmark */
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .footer {
@@ -249,9 +255,9 @@ export default {
 
 .next-btn {
   width: 100%;
-  height: 100 * $size-factor;
+  height: 110 * $size-factor;
   background-color: #d4ff00;
-  border-radius: 50 * $size-factor;
+  border-radius: 55 * $size-factor;
   justify-content: center;
   align-items: center;
 }

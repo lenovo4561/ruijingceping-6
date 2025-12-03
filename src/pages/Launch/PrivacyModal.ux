@@ -2,21 +2,21 @@
   <div class="wrapper">
     <div class="mask" if="{{show}}">
       <div class="modal-container">
-        <image class="logo" src="/assets/imgs/logo.png"></image>
+        <image class="logo" src="/assets/images/logo.png"></image>
         <text class="app-name">瑞景测评</text>
         
         <div class="agreement-wrap">
           <text class="title">用户协议及隐私政策</text>
           <div class="agreement-content">
             <text class="context">
-              <span>尊敬的用户：欢迎使用"</span><span class="highlight">瑞景测评</span><span>"，在您使用前请仔细阅读</span><a class="link" @click="openPrivacy">《隐私政策》</a><span>及</span><a class="link" @click="openAgreement">《用户协议》</a><span>，我们将严格遵守您同意的各项条款使用您的信息，以便为您提供更好的服务。点击"同意"意味着您自愿遵守《隐私政策》，我们将严格保护您的个人信息，确保信息安全。</span>
+              尊敬的用户：欢迎使用"瑞景测评"，在您使用前请仔细阅读<span class="link" onclick="openPrivacy">《隐私政策》</span>和<span class="link" onclick="openAgreement">《用户协议》</span>，我们将严格遵守您同意的各项条款使用您的信息，以便为您提供更好的服务。点击"同意"意味着您自愿遵守相关政策，我们将严格保护您的个人信息，确保信息安全。
             </text>
           </div>
           <div class="btn-group">
-            <div class="btn confirm-btn" @click="agree">
+            <div class="btn confirm-btn" onclick="agree">
               <text class="btn-text-white">同意并继续</text>
             </div>
-            <div class="btn reject-btn" @click="refuse">
+            <div class="btn reject-btn" onclick="refuse">
               <text class="btn-text-gray">不同意</text>
             </div>
           </div>
@@ -77,27 +77,27 @@ export default {
 }
 
 .modal-container {
-  width: 280 * $size-factor;
+  width: 840 * $size-factor;
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
-  border-radius: 16 * $size-factor;
-  padding: 24 * $size-factor;
-  padding-top: 20 * $size-factor;
+  border-radius: 48 * $size-factor;
+  padding: 72 * $size-factor;
+  padding-top: 60 * $size-factor;
 }
 
 .logo {
-  width: 60 * $size-factor;
-  height: 60 * $size-factor;
-  border-radius: 12 * $size-factor;
-  margin-bottom: 8 * $size-factor;
+  width: 180 * $size-factor;
+  height: 180 * $size-factor;
+  border-radius: 36 * $size-factor;
+  margin-bottom: 24 * $size-factor;
 }
 
 .app-name {
-  font-size: 18 * $size-factor;
+  font-size: 54 * $size-factor;
   font-weight: 900;
   color: #000000;
-  margin-bottom: 16 * $size-factor;
+  margin-bottom: 48 * $size-factor;
 }
 
 .agreement-wrap {
@@ -106,50 +106,46 @@ export default {
 }
 
 .title {
-  font-size: 16 * $size-factor;
+  font-size: 48 * $size-factor;
   font-weight: bold;
   color: #1a1a1a;
   text-align: center;
-  margin-bottom: 12 * $size-factor;
+  margin-bottom: 36 * $size-factor;
 }
 
 .agreement-content {
-  margin-bottom: 16 * $size-factor;
+  margin-bottom: 48 * $size-factor;
 }
 
 .context {
-  font-size: 12 * $size-factor;
-  line-height: 20 * $size-factor;
+  font-size: 36 * $size-factor;
+  line-height: 60 * $size-factor;
   color: #333333;
 }
 
-.link, .highlight {
-  color: $brand;
+.link {
+  color: #1976d2;
 }
 
 .btn-group {
   width: 100%;
   flex-direction: column;
   align-items: center;
-  margin-top: 8 * $size-factor;
+  margin-top: 24 * $size-factor;
 }
 
 .btn {
   width: 100%;
-  height: 44 * $size-factor;
-  border-radius: 22 * $size-factor;
+  height: 132 * $size-factor;
+  border-radius: 66 * $size-factor;
   text-align: center;
-  font-size: 14 * $size-factor;
-  line-height: 44 * $size-factor;
-  font-weight: bold;
   justify-content: center;
   align-items: center;
 }
 
 .confirm-btn {
-  background-color: $brand;
-  color: #ffffff;
-  margin-bottom: 10 * $size-factor;
+  background-color: #d4ff00;
+  margin-bottom: 30 * $size-factor;
 }
 
 .reject-btn {
@@ -165,13 +161,13 @@ export default {
 }
 
 .btn-text-white {
-  font-size: 14 * $size-factor;
+  font-size: 42 * $size-factor;
   font-weight: bold;
-  color: #ffffff;
+  color: #000000;
 }
 
 .btn-text-gray {
-  font-size: 14 * $size-factor;
+  font-size: 42 * $size-factor;
   font-weight: bold;
   color: #666666;
 }

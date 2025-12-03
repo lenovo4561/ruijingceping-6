@@ -1,15 +1,15 @@
 <template>
   <div class="page-container">
-    <!-- 背景图 -->
-    <image class="bg-image" src="/assets/imgs/ceshi-bg-6.png"></image>
-    <!-- 装饰图 -->
-    <image class="decor-img" src="/assets/imgs/xuanzhuan.png"></image>
+    <!-- 背景-->
+    <image class="bg-image" src="/pages/Demo/assets/imgs/ceshi-bg-6.png"></image>
+    <!-- 装饰-->
+    <image class="decor-img" src="/pages/Demo/assets/imgs/xuanzhuan.png"></image>
 
     <div class="content">
       <!-- Header -->
       <div class="header">
         <div class="back-btn" onclick="goBack">
-          <image class="back-icon" src="/assets/imgs/back.png"></image>
+          <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
         </div>
         <text class="header-title">{{ testTitle }}</text>
         <div class="placeholder"></div>
@@ -49,18 +49,24 @@
 import router from '@system.router'
 
 export default {
-  protected: {
+  data: {
     testTitle: '',
     resultLevel: '',
     resultDesc: ''
   },
   onInit() {
+    // 从路由参数获
+    if (this.$page && this.$page.query) {
+      if (this.$page.query.testTitle) this.testTitle = this.$page.query.testTitle
+      if (this.$page.query.resultLevel) this.resultLevel = this.$page.query.resultLevel
+      if (this.$page.query.resultDesc) this.resultDesc = this.$page.query.resultDesc
+    }
     // 如果没有传参，显示默认值（调试用）
     if (!this.resultLevel) {
       this.testTitle = '情商测试'
       this.resultLevel = '情商水平较高'
       this.resultDesc =
-        '你的情商处于较高水平，在情绪管理、人际沟通和问题处理等方面表现出色...'
+        '你的情商处于较高水平，在情绪管理、人际沟通和问题处理等方面表现出..'
     }
   },
   goBack() {
@@ -101,9 +107,10 @@ export default {
 
 .decor-img {
   position: absolute;
-  top: 120 * $size-factor;
+  top: 300 * $size-factor;
   left: 50%;
-  margin-left: -150 * $size-factor; // 居中
+  margin-top: -150 * $size-factor;
+  margin-left: -150 * $size-factor;
   width: 300 * $size-factor;
   height: 300 * $size-factor;
   object-fit: contain;
@@ -121,7 +128,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   height: 88 * $size-factor;
-  margin-bottom: 350 * $size-factor; // 留出装饰图空间
+  margin-bottom: 350 * $size-factor; // 留出装饰图空
 }
 
 .back-btn {
@@ -192,7 +199,7 @@ export default {
 }
 
 .btn {
-  width: 480 * $size-factor; // 约一半宽度
+  width: 480 * $size-factor; // 约一半宽
   height: 120 * $size-factor;
   border-radius: 20 * $size-factor;
   font-size: 32 * $size-factor;

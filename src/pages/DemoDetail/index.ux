@@ -5,14 +5,14 @@
 
 <template>
   <div class="page-container">
-    <!-- 背景图 -->
-    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    <!-- 背景-->
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
 
     <div class="content">
       <!-- Header -->
       <div class="header">
         <div class="back-btn" onclick="goBack">
-          <image class="back-icon" src="/assets/imgs/back.png"></image>
+          <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
         </div>
         <text class="header-title">{{ testTitle }}</text>
         <div class="placeholder"></div>
@@ -44,7 +44,7 @@
             <image
               if="{{selectedOption === $item.label}}"
               class="check-icon"
-              src="/assets/imgs/V.png"
+              src="/pages/Demo/assets/imgs/V.png"
             ></image>
           </div>
         </div>
@@ -65,15 +65,13 @@
 
 <script>
 import router from '@system.router'
-import testQuestions from '../../data/testQuestions.js'
+import testQuestions from '../Demo/data/testQuestions.js'
 import prompt from '@system.prompt'
 
 export default {
-  protected: {
+  data: {
     category: '',
-    testId: 0
-  },
-  private: {
+    testId: 0,
     testTitle: '',
     questions: [],
     currentIndex: 0,
@@ -83,6 +81,11 @@ export default {
     currentTest: null
   },
   onInit() {
+    // 从路由参数获
+    if (this.$page && this.$page.query) {
+      if (this.$page.query.category) this.category = this.$page.query.category
+      if (this.$page.query.testId) this.testId = parseInt(this.$page.query.testId) || 0
+    }
     console.log('onInit category:', this.category, 'testId:', this.testId)
 
     if (this.category && testQuestions[this.category]) {
@@ -90,9 +93,9 @@ export default {
       const test = tests[this.testId] || tests[0]
 
       if (test) {
-        // 去掉"第一套："前缀，提取标题
+        // 去掉"第一套："前缀，提取标
         this.testTitle =
-          test.title.replace(/第[一二三四五六七八九十]+套[：:.]?/, '') ||
+          test.title.replace(/第[一二三四五六七八九十]+套[.]/, '') ||
           test.title
         this.questions = test.questions
         this.totalCount = this.questions.length
@@ -135,7 +138,7 @@ export default {
     } else {
       // Calculate Result
       let resultLevel = '测试完成'
-      let resultDesc = '感谢您的参与。'
+      let resultDesc = '感谢您的参与'
 
       if (this.currentTest && this.currentTest.results) {
         const result = this.currentTest.results.find(
@@ -270,7 +273,9 @@ export default {
   font-weight: bold;
   color: #000000;
   margin-bottom: 80 * $size-factor;
-  line-height: 1.5;
+  line-height: 88 * $size-factor;
+  padding-top: 10 * $size-factor;
+  padding-bottom: 10 * $size-factor;
 }
 
 .options-list {
@@ -298,8 +303,10 @@ export default {
 .option-text {
   font-size: 34 * $size-factor;
   color: #333333;
-  line-height: 1.5;
+  line-height: 68 * $size-factor;
   flex: 1;
+  padding-top: 8 * $size-factor;
+  padding-bottom: 8 * $size-factor;
 }
 
 .check-icon {
@@ -309,7 +316,7 @@ export default {
   width: 60 * $size-factor;
   height: 60 * $size-factor;
   object-fit: contain;
-  // 移除 margin-left，使用 absolute positioning
+  // 移除 margin-left，使absolute positioning
   border-bottom-right-radius: 20 * $size-factor; // Match border radius if needed
 }
 

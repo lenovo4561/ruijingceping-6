@@ -1,14 +1,14 @@
 <template>
   <div class="page-container">
-    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
     <!-- 背景装饰 -->
-    <image class="bg-cartoon" src="/assets/imgs/0_0 1.png"></image>
+    <image class="bg-cartoon" src="/pages/Demo/assets/imgs/0_0 1.png"></image>
 
     <div class="content">
       <!-- Header -->
       <div class="header">
         <div class="back-btn" onclick="goBack">
-          <image class="back-icon" src="/assets/imgs/back.png"></image>
+          <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
         </div>
         <text class="header-title">{{ title }}</text>
         <div class="placeholder"></div>
@@ -26,23 +26,25 @@
 
 <script>
 import router from '@system.router'
-import commonKnowledge from '../../data/commonKnowledge.js'
+import commonKnowledge from '../Demo/data/commonKnowledge.js'
 
 export default {
-  protected: {
-    id: 0
-  },
-  private: {
+  data: {
+    id: 0,
     title: '',
     content: '',
     paragraphs: []
   },
   onInit() {
+    // 从路由参数获
+    if (this.$page && this.$page.query && this.$page.query.id) {
+      this.id = this.$page.query.id
+    }
     if (this.id) {
       const item = commonKnowledge.find(k => k.id == this.id)
       if (item) {
-        // 移除标题中的编号 "一、"
-        this.title = item.title.replace(/^[一二三四五六七八九十]、/, '')
+        // 移除标题中的编号 "一、
+        this.title = item.title.replace(/^[一二三四五六七八九十]、?/, '')
         this.content = item.content
         // Split content by newlines and filter empty lines
         this.paragraphs = this.content
@@ -79,13 +81,13 @@ export default {
 
 .bg-cartoon {
   position: absolute;
-  top: 25%; // 稍微下移
+  top: 50%;
   left: 50%;
+  margin-top: -300 * $size-factor;
   margin-left: -300 * $size-factor;
   width: 600 * $size-factor;
   height: 600 * $size-factor;
   object-fit: contain;
-  opacity: 0.2; // 降低透明度，避免干扰文字
 }
 
 .content {
@@ -141,11 +143,11 @@ export default {
 }
 
 .article-p {
-  font-size: 30 * $size-factor;
+  font-size: 34 * $size-factor;
   color: #333333;
-  line-height: 1.8; // 增加行高
+  line-height: 60 * $size-factor; // 增加行高
   text-align: justify;
-  margin-bottom: 40 * $size-factor; // 段落间距
-  text-indent: 60 * $size-factor; // 首行缩进
+  margin-bottom: 50 * $size-factor; // 段落间距
+  text-indent: 68 * $size-factor; // 首行缩进
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
 
     <div class="content">
       <text class="page-title">生活常识</text>
@@ -31,7 +31,7 @@
 
 <script>
 import router from '@system.router'
-import commonKnowledge from '../../../data/commonKnowledge.js'
+import commonKnowledge from '../data/commonKnowledge.js'
 
 export default {
   data: {
@@ -117,15 +117,17 @@ export default {
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
-  height: 200 * $size-factor;
+  height: 220 * $size-factor;
 }
 
 .item-title {
   font-size: 30 * $size-factor;
   color: #333333;
-  line-height: 1.4;
+  line-height: 50 * $size-factor;
   text-overflow: ellipsis;
   lines: 3;
+  padding-top: 8 * $size-factor;
+  padding-bottom: 8 * $size-factor;
 }
 
 .btn-wrap {
@@ -134,7 +136,7 @@ export default {
 }
 
 .detail-btn {
-  background-color: #d3ff18; // 亮绿色按钮
+  background-color: #d3ff18; // 亮绿色按
   padding: 10 * $size-factor 30 * $size-factor;
   border-radius: 10 * $size-factor;
   font-size: 24 * $size-factor;

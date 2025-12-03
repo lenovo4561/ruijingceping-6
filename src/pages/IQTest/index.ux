@@ -1,8 +1,9 @@
 <template>
   <div class="page-container">
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
     <div class="header">
       <div class="back-btn" onclick="goBack">
-        <image class="back-icon" src="/assets/imgs/back.png"></image>
+        <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
       </div>
       <text class="header-title">智商测试</text>
       <div class="placeholder"></div>
@@ -37,7 +38,7 @@
           <image
             if="{{selectedOptionIndex === index}}"
             class="check-icon"
-            src="/assets/imgs/check.png"
+            src="/pages/Demo/assets/imgs/V.png"
           ></image>
         </div>
       </div>
@@ -49,9 +50,7 @@
         class="next-btn {{selectedOptionIndex === -1 ? 'btn-disabled' : ''}}"
         onclick="nextQuestion"
       >
-        <text class="next-text">{{
-          currentIndex === totalCount - 1 ? '查看结果' : '下一题'
-        }}</text>
+        <text class="next-text">{{ currentIndex === totalCount - 1 ? '查看结果' : '下一题' }}</text>
       </div>
     </div>
   </div>
@@ -59,7 +58,7 @@
 
 <script>
 import router from '@system.router'
-import iqData from '../../data/iq_test.json'
+import iqData from '../Demo/data/iqData.js'
 
 export default {
   data: {
@@ -122,7 +121,16 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
+  position: relative;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 }
 
 .header {
@@ -164,7 +172,7 @@ export default {
 
 .progress-section {
   flex-direction: column;
-  margin-bottom: 60 * $size-factor;
+  margin-bottom: 40 * $size-factor;
 }
 
 .progress-text-row {
@@ -174,7 +182,7 @@ export default {
 }
 
 .current-idx {
-  font-size: 48 * $size-factor;
+  font-size: 36 * $size-factor;
   font-weight: bold;
   color: #333333;
 }
@@ -182,29 +190,29 @@ export default {
 .total-idx {
   font-size: 28 * $size-factor;
   color: #999999;
-  margin-bottom: 8 * $size-factor;
+  margin-bottom: 5 * $size-factor;
   margin-left: 5 * $size-factor;
 }
 
 .progress-bar-bg {
   width: 100%;
-  height: 12 * $size-factor;
-  background-color: #f0f0f0;
-  border-radius: 6 * $size-factor;
+  height: 16 * $size-factor;
+  background-color: #90caf9; /* Light blue for bg */
+  border-radius: 8 * $size-factor;
 }
 
 .progress-bar-fill {
   height: 100%;
-  background-color: #00bfff; /* Blue for IQ */
-  border-radius: 6 * $size-factor;
+  background: linear-gradient(to right, #42a5f5, #1976d2); /* Blue gradient */
+  border-radius: 8 * $size-factor;
 }
 
 .question-title {
-  font-size: 36 * $size-factor;
+  font-size: 42 * $size-factor;
   font-weight: bold;
   color: #333333;
-  line-height: 54 * $size-factor;
-  margin-bottom: 60 * $size-factor;
+  line-height: 64 * $size-factor;
+  margin-bottom: 50 * $size-factor;
 }
 
 .options-list {
@@ -212,33 +220,35 @@ export default {
 }
 
 .option-item {
-  flex-direction: column;
-  padding: 30 * $size-factor;
-  border: 1px solid #eeeeee;
-  border-radius: 16 * $size-factor;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36 * $size-factor;
+  border: 2px solid #eeeeee;
+  border-radius: 20 * $size-factor;
   margin-bottom: 30 * $size-factor;
   background-color: #ffffff;
   position: relative;
 }
 
 .option-selected {
-  border-color: #00bfff;
-  border-width: 2px;
+  border-color: #1976d2;
+  background-color: #e3f2fd;
 }
 
 .option-text {
-  font-size: 30 * $size-factor;
+  font-size: 36 * $size-factor;
   color: #333333;
-  line-height: 44 * $size-factor;
+  line-height: 52 * $size-factor;
+  flex: 1;
 }
 
 .check-icon {
-  position: absolute;
-  right: 0;
-  bottom: 0;
   width: 40 * $size-factor;
   height: 40 * $size-factor;
-  background-color: #00bfff;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .footer {
@@ -248,9 +258,9 @@ export default {
 
 .next-btn {
   width: 100%;
-  height: 100 * $size-factor;
-  background-color: #00bfff;
-  border-radius: 50 * $size-factor;
+  height: 110 * $size-factor;
+  background-color: #d4ff00;
+  border-radius: 55 * $size-factor;
   justify-content: center;
   align-items: center;
 }
@@ -262,6 +272,6 @@ export default {
 .next-text {
   font-size: 32 * $size-factor;
   font-weight: bold;
-  color: #ffffff;
+  color: #333333;
 }
 </style>

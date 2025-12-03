@@ -1,0 +1,300 @@
+<template>
+  <div class="page-container">
+    <!-- 顶部背景区域 -->
+    <div class="top-bg-section">
+      <image class="bg-image" src="/pages/Demo/assets/imgs/ceshi-bg-6.png"></image>
+      <image class="star-image" src="/pages/Demo/assets/imgs/xuanzhuan.png"></image>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <div class="back-btn" onclick="goBack">
+        <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
+      </div>
+      <text class="header-title">{{ testTitle }}</text>
+      <div class="placeholder"></div>
+    </div>
+
+    <!-- 结果卡片 -->
+    <scroll class="scroll-content">
+      <div class="card">
+        <text class="card-title">测试结果</text>
+
+        <!-- 分数展示 -->
+        <div class="score-section">
+          <text class="score-label">您的得分</text>
+          <text class="score-value">{{ currentScore }}</text>
+          <text class="score-unit">分</text>
+        </div>
+
+        <!-- 结果等级 -->
+        <div class="result-section">
+          <text class="result-level">{{ result.title }}</text>
+          <text class="result-desc">{{ result.desc }}</text>
+        </div>
+      </div>
+    </scroll>
+
+    <!-- 底部按钮 -->
+    <div class="footer">
+      <div class="btn restart-btn" onclick="restart">
+        <text class="btn-text-restart">重新测试</text>
+      </div>
+      <div class="btn home-btn" onclick="goHome">
+        <text class="btn-text-home">返回首页</text>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import hotTests from '../Demo/data/hotTests.js'
+
+export default {
+  data: {
+    testId: '1',
+    score: '0',
+    testTitle: '',
+    testData: null,
+    currentScore: 0,
+    allTests: [],
+    result: {
+      title: '加载中...',
+      desc: '数据加载中...'
+    }
+  },
+  onInit() {
+    console.log('HotResult onInit')
+    // 从路由参数获取
+    if (this.$page && this.$page.query) {
+      if (this.$page.query.testId) {
+        this.testId = this.$page.query.testId
+      }
+      if (this.$page.query.score) {
+        this.score = this.$page.query.score
+      }
+    }
+    
+    const id = parseInt(this.testId) || 1
+    const testData = hotTests.find(t => t.id === id) || hotTests[0]
+    if (testData) {
+      this.testData = testData
+      this.testTitle = testData.title
+      this.currentScore = parseInt(this.score) || 0
+      this.calculateResult()
+    }
+  },
+  calculateResult() {
+    if (!this.testData || !this.testData.results) {
+      return
+    }
+    
+    const score = this.currentScore
+    const results = this.testData.results
+    
+    let match = results.find(r => score >= r.minScore && score <= r.maxScore)
+    if (!match && results.length > 0) {
+      if (score < results[0].minScore) {
+        match = results[0]
+      } else {
+        match = results[results.length - 1]
+      }
+    }
+    
+    if (match) {
+      this.result = match
+    }
+  },
+  goBack() {
+    router.back()
+  },
+  restart() {
+    router.replace({
+      uri: '/pages/HotTest',
+      params: {
+        testId: this.testId
+      }
+    })
+  },
+  goHome() {
+    router.replace({
+      uri: '/pages/Demo'
+    })
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../assets/styles/style.scss';
+
+.page-container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+/* 顶部背景区域 */
+.top-bg-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500 * $size-factor;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.star-image {
+  position: absolute;
+  top: 120 * $size-factor;
+  left: 50%;
+  margin-left: -150 * $size-factor;
+  width: 300 * $size-factor;
+  height: 300 * $size-factor;
+  object-fit: contain;
+}
+
+.header {
+  height: 100 * $size-factor;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30 * $size-factor;
+  position: relative;
+}
+
+.back-btn {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.placeholder {
+  width: 60 * $size-factor;
+}
+
+.scroll-content {
+  flex: 1;
+  margin-top: 350 * $size-factor;
+}
+
+.card {
+  margin: 0 30 * $size-factor;
+  padding: 40 * $size-factor;
+  background-color: #ffffff;
+  border-radius: 30 * $size-factor;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 30 * $size-factor;
+}
+
+.score-section {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 40 * $size-factor;
+  padding: 30 * $size-factor 0;
+}
+
+.score-label {
+  font-size: 28 * $size-factor;
+  color: #666666;
+  margin-right: 20 * $size-factor;
+}
+
+.score-value {
+  font-size: 80 * $size-factor;
+  font-weight: bold;
+  color: #43a047;
+}
+
+.score-unit {
+  font-size: 28 * $size-factor;
+  color: #666666;
+  margin-left: 10 * $size-factor;
+}
+
+.result-section {
+  flex-direction: column;
+  padding: 30 * $size-factor;
+  background-color: #f9f9f9;
+  border-radius: 20 * $size-factor;
+}
+
+.result-level {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #43a047;
+  margin-bottom: 20 * $size-factor;
+}
+
+.result-desc {
+  font-size: 28 * $size-factor;
+  color: #666666;
+  line-height: 48 * $size-factor;
+  text-align: justify;
+}
+
+.footer {
+  padding: 30 * $size-factor 40 * $size-factor;
+  padding-bottom: 60 * $size-factor;
+  background-color: #ffffff;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 320 * $size-factor;
+  height: 90 * $size-factor;
+  border-radius: 45 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.restart-btn {
+  background-color: #333333;
+}
+
+.home-btn {
+  background-color: #d4ff00;
+}
+
+.btn-text-restart {
+  color: #d4ff00;
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+}
+
+.btn-text-home {
+  color: #333333;
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+}
+</style>

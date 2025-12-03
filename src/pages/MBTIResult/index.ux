@@ -1,10 +1,11 @@
 <template>
   <div class="page-container">
+    <image class="bg-image" src="/pages/Demo/assets/imgs/ceshi-bg-5.png"></image>
     <div class="header">
       <div class="back-btn" onclick="goBack">
-        <image class="back-icon" src="/assets/imgs/back.png"></image>
+        <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
       </div>
-      <text class="header-title">MBTI-16型人格测试评估报告</text>
+      <text class="header-title">MBTI-16型人格测试评估报</text>
       <div class="placeholder"></div>
     </div>
 
@@ -14,14 +15,14 @@
         <div class="result-card">
           <div class="result-header">
             <div class="result-text">
-              <text class="result-label">你的测试类型可能是</text>
+              <text class="result-label">你的测试类型可能</text>
               <text class="result-type">{{ mbtiType }}</text>
               <text class="result-name">{{ result.name }}</text>
             </div>
             <image class="result-img" src="{{result.image}}"></image>
           </div>
 
-          <!-- 维度进度条 -->
+          <!-- 维度进度-->
           <div class="dimension-bars">
             <div class="dim-row" for="{{dimensions}}">
               <text class="dim-label-left">{{ $item.left }}</text>
@@ -42,7 +43,9 @@
           <text class="card-content">{{ result.coreTraits }}</text>
 
           <text class="card-title mt-30">行为表现</text>
-          <text class="card-content">{{ result.behavior }}</text>
+          <div class="behavior-content">
+            <text class="card-content">{{ result.behavior }}</text>
+          </div>
         </div>
 
         <div class="info-card">
@@ -70,73 +73,87 @@
 
 <script>
 import router from '@system.router'
-import mbtiPersonalityTypes from '../../data/mbtiPersonalityTypes.js'
 
 export default {
-  protected: {
-    mbtiType: '',
-    scores: ''
-  },
   data: {
-    result: {},
-    dimensions: []
+    mbtiType: 'INTJ',
+    scores: '',
+    result: {
+      type: 'INTJ',
+      name: '建筑师型',
+      coreTraits: '',
+      behavior: '',
+      career: '',
+      study: '',
+      life: '',
+      image: '/pages/Demo/assets/img_s/mbti-intj.png'
+    },
+    dimensions: [],
+    // MBTI 16种人格数据
+    mbtiData: {
+      ISTJ: { name: '物流师', image: '/pages/Demo/assets/img_s/mbti-istj.png', coreTraits: 'ISTJ型人格的人务实、可靠、有条理，他们注重细节和规则，善于组织和管理，是值得信赖的执行者。', behavior: '在工作中，ISTJ能够高效完成任务，注重流程和规范。在人际交往中，ISTJ显得稳重可靠，重视承诺。', career: '会计师、审计师、行政管理、项目经理、质量控制等。', study: 'ISTJ适合学习会计学、法学、工程管理等专业。', life: 'ISTJ喜欢有规律的生活，重视家庭和传统。' },
+      ISFJ: { name: '守护者', image: '/pages/Demo/assets/img_s/mbti-isfj.png', coreTraits: 'ISFJ型人格的人温暖、细心、有责任感，他们善于照顾他人，是可靠的支持者。', behavior: '在工作中，ISFJ注重细节，乐于助人。在人际交往中，ISFJ温和体贴，重视和谐。', career: '护士、教师、社工、人力资源、客户服务等。', study: 'ISFJ适合学习护理学、教育学、心理学等专业。', life: 'ISFJ喜欢温馨的家庭环境，乐于照顾家人。' },
+      ESTJ: { name: '总经理', image: '/pages/Demo/assets/img_s/mbti-estj.png', coreTraits: 'ESTJ型人格的人果断、务实、有领导力，他们善于组织和管理，是天生的领导者。', behavior: '在工作中，ESTJ能够高效决策，注重结果。在人际交往中，ESTJ直接坦率，重视效率。', career: '企业管理、项目经理、销售总监、军官、法官等。', study: 'ESTJ适合学习工商管理、法学、公共管理等专业。', life: 'ESTJ喜欢有秩序的生活，重视社会地位。' },
+      ESFJ: { name: '执政官', image: '/pages/Demo/assets/img_s/mbti-esfj.png', coreTraits: 'ESFJ型人格的人热情、友善、有责任感，他们善于社交，乐于助人。', behavior: '在工作中，ESFJ注重团队合作，善于协调。在人际交往中，ESFJ热情开朗，重视关系。', career: '公关、销售、教师、医护人员、活动策划等。', study: 'ESFJ适合学习市场营销、教育学、传播学等专业。', life: 'ESFJ喜欢社交活动，重视家庭和朋友。' },
+      ISTP: { name: '鉴赏家', image: '/pages/Demo/assets/img_s/mbti-istp.png', coreTraits: 'ISTP型人格的人冷静、理性、善于分析，他们喜欢动手实践，是出色的问题解决者。', behavior: '在工作中，ISTP能够快速分析问题，找到解决方案。在人际交往中，ISTP独立自主，不喜欢被约束。', career: '工程师、技术员、飞行员、运动员、侦探等。', study: 'ISTP适合学习机械工程、计算机科学、体育等专业。', life: 'ISTP喜欢冒险和挑战，享受独处时光。' },
+      ISFP: { name: '探险家', image: '/pages/Demo/assets/img_s/mbti-isfp.png', coreTraits: 'ISFP型人格的人温和、敏感、有艺术天赋，他们追求美和和谐，是天生的艺术家。', behavior: '在工作中，ISFP注重美感和创意。在人际交往中，ISFP温柔体贴，不喜欢冲突。', career: '艺术家、设计师、摄影师、音乐家、美容师等。', study: 'ISFP适合学习艺术设计、音乐、摄影等专业。', life: 'ISFP喜欢亲近自然，享受艺术和美。' },
+      ESTP: { name: '企业家', image: '/pages/Demo/assets/img_s/mbti-estp.png', coreTraits: 'ESTP型人格的人大胆、务实、善于行动，他们喜欢冒险和挑战，是出色的实干家。', behavior: '在工作中，ESTP能够快速行动，抓住机会。在人际交往中，ESTP魅力十足，善于社交。', career: '企业家、销售、运动员、演员、急救人员等。', study: 'ESTP适合学习商学、体育、表演等专业。', life: 'ESTP喜欢刺激和冒险，享受当下。' },
+      ESFP: { name: '表演者', image: '/pages/Demo/assets/img_s/mbti-esfp.png', coreTraits: 'ESFP型人格的人热情、乐观、善于表演，他们喜欢成为焦点，是天生的表演者。', behavior: '在工作中，ESFP充满活力，善于激励他人。在人际交往中，ESFP热情友好，喜欢社交。', career: '演员、主持人、销售、活动策划、导游等。', study: 'ESFP适合学习表演、传媒、旅游管理等专业。', life: 'ESFP喜欢热闹和派对，享受生活。' },
+      INFJ: { name: '提倡者', image: '/pages/Demo/assets/img_s/mbti-infj.png', coreTraits: 'INFJ型人格的人有洞察力、理想主义、富有同情心，他们追求意义和价值，是天生的顾问。', behavior: '在工作中，INFJ能够洞察他人需求，提供帮助。在人际交往中，INFJ深思熟虑，重视深度连接。', career: '心理咨询师、作家、教师、社工、人力资源等。', study: 'INFJ适合学习心理学、哲学、文学等专业。', life: 'INFJ喜欢独处和思考，追求精神成长。' },
+      INFP: { name: '调停者', image: '/pages/Demo/assets/img_s/mbti-infp.png', coreTraits: 'INFP型人格的人理想主义、富有创意、善解人意，他们追求真实和意义，是天生的理想主义者。', behavior: '在工作中，INFP注重价值观和意义。在人际交往中，INFP温和体贴，善于倾听。', career: '作家、艺术家、心理咨询师、社工、教师等。', study: 'INFP适合学习文学、艺术、心理学等专业。', life: 'INFP喜欢独处和创作，追求内心平静。' },
+      ENFJ: { name: '主人公', image: '/pages/Demo/assets/img_s/mbti-enfj.png', coreTraits: 'ENFJ型人格的人有魅力、善于激励、富有同情心，他们善于领导和影响他人，是天生的领袖。', behavior: '在工作中，ENFJ能够激励团队，推动变革。在人际交往中，ENFJ热情友好，善于沟通。', career: '教师、培训师、人力资源、公关、政治家等。', study: 'ENFJ适合学习教育学、传播学、心理学等专业。', life: 'ENFJ喜欢帮助他人，重视人际关系。' },
+      ENFP: { name: '竞选者', image: '/pages/Demo/assets/img_s/mbti-enfp.png', coreTraits: 'ENFP型人格的人热情、有创意、善于社交，他们追求新奇和可能性，是天生的创新者。', behavior: '在工作中，ENFP充满创意，善于激励他人。在人际交往中，ENFP热情开朗，善于建立联系。', career: '记者、广告创意、演员、咨询师、创业者等。', study: 'ENFP适合学习传媒、广告、心理学等专业。', life: 'ENFP喜欢探索新事物，享受社交。' },
+      INTJ: { name: '建筑师', image: '/pages/Demo/assets/img_s/mbti-intj.png', coreTraits: 'INTJ型人格的人独立、理性、有深度，他们具备强大的逻辑思维和战略规划能力，善于从复杂的信息中提炼核心规律，并用长远的眼光制定目标。', behavior: '在工作中，INTJ能够快速洞察行业趋势和业务痛点，制定出兼具创新性和可行性的战略方案。在人际交往中，INTJ显得理性而疏离，更倾向于进行有深度、有逻辑的交流。', career: '战略顾问、产品架构师、数据分析师、科研人员、金融分析师、软件开发工程师等。', study: 'INTJ适合学习计算机科学、数学、物理学、金融学、建筑学、哲学等专业。', life: 'INTJ适合生活在安静、有文化氛围的环境中，喜欢参加学术研讨会、技术沙龙等活动。' },
+      INTP: { name: '逻辑学家', image: '/pages/Demo/assets/img_s/mbti-intp.png', coreTraits: 'INTP型人格的人善于分析、追求真理、独立思考，他们喜欢探索复杂的理论和概念。', behavior: '在工作中，INTP能够深入分析问题，提出创新解决方案。在人际交往中，INTP独立自主，喜欢深度讨论。', career: '科学家、程序员、哲学家、分析师、工程师等。', study: 'INTP适合学习数学、物理、计算机科学、哲学等专业。', life: 'INTP喜欢独处和思考，追求知识和真理。' },
+      ENTJ: { name: '指挥官', image: '/pages/Demo/assets/img_s/mbti-entj.png', coreTraits: 'ENTJ型人格的人果断、有远见、善于领导，他们天生具备领导力，善于制定战略和推动执行。', behavior: '在工作中，ENTJ能够高效决策，带领团队达成目标。在人际交往中，ENTJ直接坦率，注重效率。', career: 'CEO、企业家、律师、政治家、管理顾问等。', study: 'ENTJ适合学习工商管理、法学、经济学等专业。', life: 'ENTJ喜欢挑战和成就，追求卓越。' },
+      ENTP: { name: '辩论家', image: '/pages/Demo/assets/img_s/mbti-entp.png', coreTraits: 'ENTP型人格的人聪明、善辩、富有创意，他们喜欢挑战传统，探索新的可能性。', behavior: '在工作中，ENTP能够提出创新想法，善于辩论和说服。在人际交往中，ENTP机智幽默，喜欢智力交流。', career: '律师、企业家、咨询师、发明家、记者等。', study: 'ENTP适合学习法学、哲学、商学、传媒等专业。', life: 'ENTP喜欢辩论和探索，追求智力刺激。' }
+    }
   },
   onInit() {
-    this.loadResult()
-    this.processScores()
-  },
-  loadResult() {
-    const type = this.mbtiType || 'ISTJ'
-    this.result = mbtiPersonalityTypes[type] || mbtiPersonalityTypes['ISTJ']
-  },
-  processScores() {
-    if (!this.scores) return
-
-    try {
-      const scoresObj = JSON.parse(this.scores)
-      const total = 13 // 每维度13题
-
-      this.dimensions = [
-        {
-          left: '外倾(E)',
-          right: '内向(I)',
-          score: (Math.max(scoresObj.E, scoresObj.I) / total) * 100,
-          leftPos:
-            scoresObj.E > scoresObj.I
-              ? 0
-              : 100 - (Math.max(scoresObj.E, scoresObj.I) / total) * 100
-        },
-        {
-          left: '实感(S)',
-          right: '直觉(N)',
-          score: (Math.max(scoresObj.S, scoresObj.N) / total) * 100,
-          leftPos:
-            scoresObj.S > scoresObj.N
-              ? 0
-              : 100 - (Math.max(scoresObj.S, scoresObj.N) / total) * 100
-        },
-        {
-          left: '理性(T)',
-          right: '感性(F)',
-          score: (Math.max(scoresObj.T, scoresObj.F) / total) * 100,
-          leftPos:
-            scoresObj.T > scoresObj.F
-              ? 0
-              : 100 - (Math.max(scoresObj.T, scoresObj.F) / total) * 100
-        },
-        {
-          left: '判断(J)',
-          right: '知觉(P)',
-          score: (Math.max(scoresObj.J, scoresObj.P) / total) * 100,
-          leftPos:
-            scoresObj.J > scoresObj.P
-              ? 0
-              : 100 - (Math.max(scoresObj.J, scoresObj.P) / total) * 100
-        }
-      ]
-    } catch (e) {
-      console.error('Parse scores failed:', e)
+    // 从路由参数获
+    if (this.$page && this.$page.query) {
+      if (this.$page.query.mbtiType) {
+        this.mbtiType = this.$page.query.mbtiType
+      }
+      if (this.$page.query.scores) {
+        this.scores = this.$page.query.scores
+      }
     }
+    
+    // 根据类型获取结果数据
+    const typeData = this.mbtiData[this.mbtiType]
+    if (typeData) {
+      this.result = {
+        type: this.mbtiType,
+        name: typeData.name,
+        coreTraits: typeData.coreTraits,
+        behavior: typeData.behavior,
+        career: typeData.career,
+        study: typeData.study,
+        life: typeData.life,
+        image: typeData.image
+      }
+    }
+    
+    // 计算维度进度
+    if (this.scores) {
+      try {
+        const s = JSON.parse(this.scores)
+        this.dimensions = [
+          { left: '外向(E)', right: '内向(I)', score: this.calcPercent(s.E, s.I), leftPos: s.E > s.I ? 0 : (100 - this.calcPercent(s.E, s.I)) },
+          { left: '实感(S)', right: '直觉(N)', score: this.calcPercent(s.S, s.N), leftPos: s.S > s.N ? 0 : (100 - this.calcPercent(s.S, s.N)) },
+          { left: '理性(T)', right: '情感(F)', score: this.calcPercent(s.T, s.F), leftPos: s.T > s.F ? 0 : (100 - this.calcPercent(s.T, s.F)) },
+          { left: '判断(J)', right: '知觉(P)', score: this.calcPercent(s.J, s.P), leftPos: s.J > s.P ? 0 : (100 - this.calcPercent(s.J, s.P)) }
+        ]
+      } catch (e) {
+        console.error('Parse scores error:', e)
+      }
+    }
+  },
+  calcPercent(a, b) {
+    const total = a + b
+    if (total === 0) return 50
+    return Math.round(Math.max(a, b) / total * 100)
   },
   goBack() {
     router.back()
@@ -151,7 +168,17 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: #b2ebf2; /* 浅蓝背景 */
+  position: relative;
+  background-color: #ffffff;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1000 * $size-factor;
+  object-fit: fill;
 }
 
 .header {
@@ -163,17 +190,17 @@ export default {
 }
 
 .back-btn {
-  width: 60 * $size-factor;
-  height: 60 * $size-factor;
+  width: 80 * $size-factor;
+  height: 80 * $size-factor;
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  border-radius: 30 * $size-factor;
+  border-radius: 40 * $size-factor;
 }
 
 .back-icon {
-  width: 30 * $size-factor;
-  height: 30 * $size-factor;
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
   object-fit: contain;
 }
 
@@ -199,15 +226,17 @@ export default {
 
 .result-card {
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 20 * $size-factor;
   padding: 40 * $size-factor;
   margin-bottom: 30 * $size-factor;
+  border: 2px solid #ffffff;
 }
 
 .result-header {
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 40 * $size-factor;
 }
 
@@ -216,27 +245,28 @@ export default {
 }
 
 .result-label {
-  font-size: 24 * $size-factor;
-  color: #999999;
+  font-size: 28 * $size-factor;
+  color: #333333;
   margin-bottom: 10 * $size-factor;
+  opacity: 0.7;
 }
 
 .result-type {
-  font-size: 80 * $size-factor;
+  font-size: 100 * $size-factor;
   font-weight: 900;
-  color: #5d4037; /* 深褐色 */
+  color: #5d4037; /* 深褐*/
   margin-bottom: 10 * $size-factor;
 }
 
 .result-name {
-  font-size: 32 * $size-factor;
+  font-size: 36 * $size-factor;
   font-weight: bold;
   color: #5d4037;
 }
 
 .result-img {
-  width: 200 * $size-factor;
-  height: 200 * $size-factor;
+  width: 280 * $size-factor;
+  height: 280 * $size-factor;
   object-fit: contain;
 }
 
@@ -252,7 +282,7 @@ export default {
 
 .dim-label-left {
   width: 120 * $size-factor;
-  font-size: 26 * $size-factor;
+  font-size: 28 * $size-factor;
   color: #333333;
   font-weight: bold;
   text-align: right;
@@ -261,7 +291,7 @@ export default {
 
 .dim-label-right {
   width: 120 * $size-factor;
-  font-size: 26 * $size-factor;
+  font-size: 28 * $size-factor;
   color: #333333;
   font-weight: bold;
   margin-left: 20 * $size-factor;
@@ -284,14 +314,14 @@ export default {
 
 .info-card {
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 20 * $size-factor;
   padding: 40 * $size-factor;
   margin-bottom: 20 * $size-factor;
 }
 
 .card-title {
-  font-size: 32 * $size-factor;
+  font-size: 34 * $size-factor;
   font-weight: bold;
   color: #333333;
   margin-bottom: 20 * $size-factor;
@@ -302,9 +332,10 @@ export default {
 }
 
 .card-content {
-  font-size: 28 * $size-factor;
-  color: #666666;
-  line-height: 46 * $size-factor;
+  font-size: 30 * $size-factor;
+  color: #444444;
+  line-height: 52 * $size-factor;
+  text-align: justify;
 }
 
 .field-item {

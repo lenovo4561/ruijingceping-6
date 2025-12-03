@@ -1,0 +1,307 @@
+<template>
+  <div class="page-container">
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
+    <div class="header">
+      <div class="back-btn" onclick="goBack">
+        <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
+      </div>
+      <text class="header-title">{{ testTitle || '测试' }}</text>
+      <div class="placeholder"></div>
+    </div>
+
+    <div class="content" if="{{currentQuestion}}">
+      <!-- 进度 -->
+      <div class="progress-section">
+        <div class="progress-text-row">
+          <text class="current-idx">第{{ currentIndex + 1 }}题</text>
+          <text class="total-idx">/{{ totalCount }}</text>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: {{progressPercent}}%"></div>
+        </div>
+      </div>
+
+      <!-- 题目 -->
+      <text class="question-title">{{ currentQuestion.question }}</text>
+
+      <!-- 选项 -->
+      <div class="options-list">
+        <div
+          class="option-item {{selectedOptionIndex === index ? 'option-selected' : ''}}"
+          for="{{(index, item) in currentQuestion.options}}"
+          onclick="selectOption(index)"
+        >
+          <text class="option-text">{{ item.label }}. {{ item.text }}</text>
+          <image
+            if="{{selectedOptionIndex === index}}"
+            class="check-icon"
+            src="/pages/Demo/assets/imgs/V.png"
+          ></image>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部按钮 -->
+    <div class="footer">
+      <div
+        class="next-btn {{selectedOptionIndex === -1 ? 'btn-disabled' : ''}}"
+        onclick="nextQuestion"
+      >
+        <text class="next-text">{{ currentIndex === totalCount - 1 ? '查看结果' : '下一题' }}</text>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import hotTests from '../Demo/data/hotTests.js'
+
+export default {
+  data: {
+    testId: '1',
+    testTitle: '',
+    testData: null,
+    questions: [],
+    currentIndex: 0,
+    selectedOptionIndex: -1,
+    score: 0,
+    totalCount: 0
+  },
+  onInit() {
+    console.info('=== HotTest onInit ===')
+    // 从路由参数获testId
+    if (this.$page && this.$page.query && this.$page.query.testId) {
+      this.testId = this.$page.query.testId
+    }
+    console.info('testId:', this.testId)
+    
+    const id = parseInt(this.testId) || 1
+    const testData = hotTests.find(t => t.id === id) || hotTests[0]
+    
+    if (testData) {
+      this.testData = testData
+      this.testTitle = testData.title
+      this.questions = testData.questions || []
+      this.totalCount = this.questions.length
+      console.info('Loaded:', this.testTitle, 'Questions:', this.totalCount)
+    }
+  },
+  computed: {
+    currentQuestion() {
+      if (this.questions && this.questions.length > 0) {
+        return this.questions[this.currentIndex]
+      }
+      return null
+    },
+    progressPercent() {
+      if (this.totalCount > 0) {
+        return ((this.currentIndex + 1) / this.totalCount) * 100
+      }
+      return 0
+    }
+  },
+  goBack() {
+    router.back()
+  },
+  selectOption(index) {
+    this.selectedOptionIndex = index
+  },
+  nextQuestion() {
+    if (this.selectedOptionIndex === -1) return
+
+    const option = this.currentQuestion.options[this.selectedOptionIndex]
+    this.score += (option.score || 0)
+
+    if (this.currentIndex < this.totalCount - 1) {
+      this.currentIndex++
+      this.selectedOptionIndex = -1
+    } else {
+      router.replace({
+        uri: '/pages/HotResult',
+        params: {
+          testId: String(this.testData.id),
+          score: String(this.score)
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+@import './../../assets/styles/style.scss';
+
+.page-container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.header {
+  height: 100 * $size-factor;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30 * $size-factor;
+}
+
+.back-btn {
+  width: 60 * $size-factor;
+  height: 60 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-icon {
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.placeholder {
+  width: 60 * $size-factor;
+}
+
+.content {
+  flex: 1;
+  flex-direction: column;
+  padding: 40 * $size-factor;
+}
+
+.progress-section {
+  flex-direction: column;
+  margin-bottom: 40 * $size-factor;
+}
+
+.progress-text-row {
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 15 * $size-factor;
+}
+
+.current-idx {
+  font-size: 36 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.total-idx {
+  font-size: 28 * $size-factor;
+  color: #999999;
+  margin-bottom: 5 * $size-factor;
+  margin-left: 5 * $size-factor;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 16 * $size-factor;
+  background-color: #e0f2f1;
+  border-radius: 8 * $size-factor;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #80cbc4, #d4ff00);
+  border-radius: 8 * $size-factor;
+}
+
+.question-title {
+  font-size: 42 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+  line-height: 64 * $size-factor;
+  margin-bottom: 50 * $size-factor;
+}
+
+.options-list {
+  flex-direction: column;
+}
+
+.option-item {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36 * $size-factor;
+  border: 2px solid #eeeeee;
+  border-radius: 20 * $size-factor;
+  margin-bottom: 30 * $size-factor;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.option-selected {
+  border-color: #333333;
+  background-color: #ffffff;
+}
+
+.option-text {
+  font-size: 32 * $size-factor;
+  color: #333333;
+  line-height: 48 * $size-factor;
+  flex: 1;
+}
+
+.check-icon {
+  width: 40 * $size-factor;
+  height: 40 * $size-factor;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.footer {
+  padding: 30 * $size-factor;
+  padding-bottom: 60 * $size-factor;
+}
+
+.next-btn {
+  width: 100%;
+  height: 110 * $size-factor;
+  background-color: #d4ff00;
+  border-radius: 55 * $size-factor;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-disabled {
+  background-color: #eeeeee;
+}
+
+.next-text {
+  font-size: 32 * $size-factor;
+  font-weight: bold;
+  color: #333333;
+}
+
+.debug-info {
+  font-size: 28 * $size-factor;
+  color: #ff0000;
+  padding: 40 * $size-factor;
+  background-color: #ffeeee;
+}
+
+.test-text {
+  font-size: 40 * $size-factor;
+  color: #333333;
+  padding: 20 * $size-factor;
+  background-color: #ffff00;
+  margin: 10 * $size-factor;
+}
+</style>

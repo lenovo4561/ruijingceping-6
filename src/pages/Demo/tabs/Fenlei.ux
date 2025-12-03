@@ -1,11 +1,11 @@
 <template>
   <div class="page-container">
-    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
 
     <!-- Banner -->
     <div class="banner-wrap">
-      <image class="banner-img" src="/assets/imgs/banner-1.png"></image>
-      <text class="banner-text">不只是标签，更是你的人格画像</text>
+      <image class="banner-img" src="/pages/Demo/assets/imgs/banner-1.png"></image>
+      <div class="banner-mask"></div>
     </div>
 
     <div class="content">
@@ -50,30 +50,28 @@
       </div>
 
       <!-- List -->
-      <list class="test-list">
+      <list class="list-content">
         <list-item
-          type="test-item"
-          class="test-item"
-          for="{{currentList}}"
-          onclick="goDetail($item.index)"
+          type="item"
+          class="list-item"
+          for="{{(index, item) in currentList}}"
+          onclick="goDetail(item.index)"
         >
-          <text class="item-title">{{ $item.title }}</text>
+          <text class="item-title">{{ item.title }}</text>
           <div class="item-info">
-            <div class="rating">
-              <text class="rating-text">推荐指数：</text>
+            <div class="rating-wrap">
+              <text class="rating-label">推荐指数:</text>
               <div class="stars">
                 <image
                   class="star-icon"
-                  src="/assets/imgs/pingjia-xing.png"
-                  for="{{[1,2,3,4,5]}}"
+                  src="/pages/Demo/assets/imgs/pingjia-xing.png"
+                  for="{{stars}}"
                 ></image>
               </div>
             </div>
-            <text class="count">9876 人在测试</text>
+            <text class="count-text">{{ item.count || 9876 }} 人在测试</text>
           </div>
         </list-item>
-        <!-- 底部留白 -->
-        <list-item type="spacer" class="spacer"></list-item>
       </list>
     </div>
   </div>
@@ -81,12 +79,13 @@
 
 <script>
 import router from '@system.router'
-import testQuestions from '../../../data/testQuestions.js'
+import testQuestions from '../data/testQuestions.js'
 
 export default {
   data: {
     currentCategory: 'xingge',
-    currentList: []
+    currentList: [],
+    stars: [1, 2, 3, 4, 5]
   },
   onInit() {
     this.updateList()
@@ -96,12 +95,12 @@ export default {
     this.updateList()
   },
   updateList() {
-    if (testQuestions[this.currentCategory]) {
+    if (testQuestions && testQuestions[this.currentCategory]) {
       this.currentList = testQuestions[this.currentCategory].map(
         (item, index) => {
           let cleanTitle = item.title
-          if (cleanTitle.includes('：')) {
-            cleanTitle = cleanTitle.split('：')[1]
+          if (cleanTitle.includes('、')) {
+            cleanTitle = cleanTitle.split('、')[1]
           }
           return {
             ...item,
@@ -148,10 +147,11 @@ export default {
 
 .banner-wrap {
   width: 100%;
-  height: 500 * $size-factor;
+  height: 580 * $size-factor;
   position: relative;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  padding-bottom: 60 * $size-factor;
 }
 
 .banner-img {
@@ -163,12 +163,22 @@ export default {
   left: 0;
 }
 
+.banner-mask {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200 * $size-factor;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+}
+
 .banner-text {
-  color: #adff2f; // 荧光绿
-  font-size: 40 * $size-factor;
+  color: #adff2f; /* 荧光*/
+  font-size: 36 * $size-factor;
   font-weight: bold;
-  margin-top: 200 * $size-factor;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  z-index: 1;
+  margin-bottom: 40 * $size-factor;
 }
 
 .content {
@@ -179,23 +189,21 @@ export default {
   border-top-right-radius: 40 * $size-factor;
   margin-top: -40 * $size-factor;
   padding: 40 * $size-factor;
+  padding-top: 50 * $size-factor;
 }
 
 .tabs {
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 40 * $size-factor;
-  background-color: #f8f8f8;
-  border-radius: 40 * $size-factor;
-  padding: 10 * $size-factor;
 }
 
 .tab-item {
-  flex: 1;
-  height: 70 * $size-factor;
+  width: 140 * $size-factor; /* Fixed width for pills */
+  height: 64 * $size-factor;
   justify-content: center;
   align-items: center;
-  border-radius: 35 * $size-factor;
+  border-radius: 32 * $size-factor;
 }
 
 .tab-active {
@@ -212,21 +220,22 @@ export default {
   font-weight: bold;
 }
 
-.test-list {
+.list-content {
   flex: 1;
   flex-direction: column;
+  padding-bottom: 30 * $size-factor;
 }
 
-.test-item {
+.list-item {
   flex-direction: column;
-  background-color: #f9fafb;
+  background-color: #F5FBFB;
   border-radius: 20 * $size-factor;
   padding: 30 * $size-factor;
   margin-bottom: 20 * $size-factor;
 }
 
 .item-title {
-  font-size: 32 * $size-factor;
+  font-size: 30 * $size-factor;
   color: #333333;
   margin-bottom: 20 * $size-factor;
   font-weight: bold;
@@ -236,31 +245,33 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
-.rating {
+.rating-wrap {
   flex-direction: row;
   align-items: center;
 }
 
-.rating-text {
-  font-size: 24 * $size-factor;
+.rating-label {
+  font-size: 22 * $size-factor;
   color: #999999;
   margin-right: 10 * $size-factor;
 }
 
 .stars {
   flex-direction: row;
+  align-items: center;
 }
 
 .star-icon {
   width: 30 * $size-factor;
   height: 30 * $size-factor;
-  margin-right: 5 * $size-factor;
+  margin-right: 4 * $size-factor;
 }
 
-.count {
-  font-size: 24 * $size-factor;
+.count-text {
+  font-size: 22 * $size-factor;
   color: #999999;
 }
 

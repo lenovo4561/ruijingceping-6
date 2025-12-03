@@ -1,12 +1,12 @@
 <template>
   <div class="page-container">
-    <image class="bg-image" src="/assets/imgs/shouyedingbg.png"></image>
+    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
 
     <div class="content">
       <!-- 用户信息区域 -->
       <div class="user-info">
-        <image class="avatar" src="/assets/imgs/logo.png"></image>
-        <text class="username">赵吾光</text>
+        <image class="avatar" src="/pages/Demo/assets/img_s/mbti-esfj.png"></image>
+        <text class="username">赵吾</text>
       </div>
 
       <!-- 其他服务卡片 -->
@@ -15,10 +15,10 @@
 
         <div class="menu-item" onclick="openAgreement">
           <div class="menu-left">
-            <image class="menu-icon" src="/assets/imgs/yonghuxieyi.png"></image>
+            <image class="menu-icon" src="/pages/Demo/assets/imgs/yonghuxieyi.png"></image>
             <text class="menu-text">用户协议</text>
           </div>
-          <image class="arrow-icon" src="/assets/imgs/jiantou.png"></image>
+          <image class="arrow-icon" src="/pages/Demo/assets/imgs/jiantou.png"></image>
         </div>
 
         <div class="divider"></div>
@@ -27,11 +27,11 @@
           <div class="menu-left">
             <image
               class="menu-icon"
-              src="/assets/imgs/yinsizhengce-1.png"
+              src="/pages/Demo/assets/imgs/yinsizhengce-1.png"
             ></image>
             <text class="menu-text">隐私政策</text>
           </div>
-          <image class="arrow-icon" src="/assets/imgs/jiantou.png"></image>
+          <image class="arrow-icon" src="/pages/Demo/assets/imgs/jiantou.png"></image>
         </div>
       </div>
     </div>
@@ -152,10 +152,10 @@ export default {
 }
 
 .arrow-icon {
-  width: 24 * $size-factor;
-  height: 24 * $size-factor;
+  width: 50 * $size-factor;
+  height: 50 * $size-factor;
   object-fit: contain;
-  opacity: 0.3;
+  flex-shrink: 0;
 }
 
 .divider {
