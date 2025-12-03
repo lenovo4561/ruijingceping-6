@@ -1,15 +1,26 @@
 <template>
   <div class="page-container">
     <!-- 背景-->
-    <image class="bg-image" src="/pages/Demo/assets/imgs/ceshi-bg-6.png"></image>
+    <image
+      class="bg-image"
+      src="/pages/Demo/assets/imgs/ceshi-bg-6.png"
+    ></image>
     <!-- 装饰-->
-    <image class="decor-img" src="/pages/Demo/assets/imgs/xuanzhuan.png"></image>
+    <div class="decor-wrapper">
+      <image
+        class="decor-img"
+        src="/pages/Demo/assets/imgs/xuanzhuan.png"
+      ></image>
+    </div>
 
     <div class="content">
       <!-- Header -->
       <div class="header">
         <div class="back-btn" onclick="goBack">
-          <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
+          <image
+            class="back-icon"
+            src="/pages/Demo/assets/imgs/back.png"
+          ></image>
         </div>
         <text class="header-title">{{ testTitle }}</text>
         <div class="placeholder"></div>
@@ -49,8 +60,11 @@ export default {
   },
   onInit() {
     console.log('Result onInit - $page:', JSON.stringify(this.$page))
-    console.log('Result onInit - query:', JSON.stringify(this.$page && this.$page.query))
-    
+    console.log(
+      'Result onInit - query:',
+      JSON.stringify(this.$page && this.$page.query)
+    )
+
     // 从路由参数获取（需要解码）
     if (this.$page && this.$page.query) {
       if (this.$page.query.testTitle) {
@@ -75,11 +89,11 @@ export default {
         }
       }
     }
-    
+
     console.log('Result - testTitle:', this.testTitle)
     console.log('Result - resultLevel:', this.resultLevel)
     console.log('Result - resultDesc:', this.resultDesc)
-    
+
     // 如果没有传参，显示默认值（调试用）
     if (!this.resultLevel) {
       this.testTitle = '情商测试'
@@ -124,12 +138,16 @@ export default {
   object-fit: cover;
 }
 
-.decor-img {
+.decor-wrapper {
   position: absolute;
-  top: 300 * $size-factor;
-  left: 50%;
-  margin-top: -150 * $size-factor;
-  margin-left: -150 * $size-factor;
+  top: 150 * $size-factor;
+  left: 0;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.decor-img {
   width: 300 * $size-factor;
   height: 300 * $size-factor;
   object-fit: contain;

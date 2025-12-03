@@ -2,8 +2,16 @@
   <div class="page-container">
     <!-- 顶部背景区域 -->
     <div class="top-bg-section">
-      <image class="bg-image" src="/pages/Demo/assets/imgs/ceshi-bg-6.png"></image>
-      <image class="star-image" src="/pages/Demo/assets/imgs/xuanzhuan.png"></image>
+      <image
+        class="bg-image"
+        src="/pages/Demo/assets/imgs/ceshi-bg-6.png"
+      ></image>
+      <div class="star-wrapper">
+        <image
+          class="star-image"
+          src="/pages/Demo/assets/imgs/xuanzhuan.png"
+        ></image>
+      </div>
     </div>
 
     <!-- Header -->
@@ -60,14 +68,14 @@ export default {
   },
   calculateResult() {
     const score = parseInt(this.currentScore) || 0
-    
+
     let match = null
     if (iqData && iqData.results) {
       const results = iqData.results
       match = results.find(r => score >= r.minScore && score <= r.maxScore)
       if (!match && results.length > 0) {
-         if (score < results[0].minScore) match = results[0]
-         else match = results[results.length - 1]
+        if (score < results[0].minScore) match = results[0]
+        else match = results[results.length - 1]
       }
     }
 
@@ -124,11 +132,16 @@ export default {
   object-fit: cover;
 }
 
-.star-image {
+.star-wrapper {
   position: absolute;
   top: 120 * $size-factor;
-  left: 50%;
-  margin-left: -150 * $size-factor;
+  left: 0;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.star-image {
   width: 300 * $size-factor;
   height: 300 * $size-factor;
   object-fit: contain;

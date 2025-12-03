@@ -1,14 +1,22 @@
 <template>
   <div class="page-container">
-    <image class="bg-image" src="/pages/Demo/assets/imgs/shouyedingbg.png"></image>
+    <image
+      class="bg-image"
+      src="/pages/Demo/assets/imgs/shouyedingbg.png"
+    ></image>
     <!-- 背景装饰 -->
-    <image class="bg-cartoon" src="/pages/Demo/assets/imgs/0_0 1.png"></image>
+    <div class="bg-cartoon-wrapper">
+      <image class="bg-cartoon" src="/pages/Demo/assets/imgs/0_0 1.png"></image>
+    </div>
 
     <div class="content">
       <!-- Header -->
       <div class="header">
         <div class="back-btn" onclick="goBack">
-          <image class="back-icon" src="/pages/Demo/assets/imgs/back.png"></image>
+          <image
+            class="back-icon"
+            src="/pages/Demo/assets/imgs/back.png"
+          ></image>
         </div>
         <text class="header-title">{{ title }}</text>
         <div class="placeholder"></div>
@@ -79,12 +87,17 @@ export default {
   object-fit: fill;
 }
 
-.bg-cartoon {
+.bg-cartoon-wrapper {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -300 * $size-factor;
-  margin-left: -300 * $size-factor;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-cartoon {
   width: 600 * $size-factor;
   height: 600 * $size-factor;
   object-fit: contain;

@@ -2,8 +2,16 @@
   <div class="page-container">
     <!-- 顶部背景区域 -->
     <div class="top-bg-section">
-      <image class="bg-image" src="/pages/Demo/assets/imgs/ceshi-bg-6.png"></image>
-      <image class="star-image" src="/pages/Demo/assets/imgs/xuanzhuan.png"></image>
+      <image
+        class="bg-image"
+        src="/pages/Demo/assets/imgs/ceshi-bg-6.png"
+      ></image>
+      <div class="star-wrapper">
+        <image
+          class="star-image"
+          src="/pages/Demo/assets/imgs/xuanzhuan.png"
+        ></image>
+      </div>
     </div>
 
     <!-- Header -->
@@ -75,7 +83,7 @@ export default {
         this.score = this.$page.query.score
       }
     }
-    
+
     const id = parseInt(this.testId) || 1
     const testData = hotTests.find(t => t.id === id) || hotTests[0]
     if (testData) {
@@ -89,10 +97,10 @@ export default {
     if (!this.testData || !this.testData.results) {
       return
     }
-    
+
     const score = this.currentScore
     const results = this.testData.results
-    
+
     let match = results.find(r => score >= r.minScore && score <= r.maxScore)
     if (!match && results.length > 0) {
       if (score < results[0].minScore) {
@@ -101,7 +109,7 @@ export default {
         match = results[results.length - 1]
       }
     }
-    
+
     if (match) {
       this.result = match
     }
@@ -153,11 +161,16 @@ export default {
   object-fit: cover;
 }
 
-.star-image {
+.star-wrapper {
   position: absolute;
   top: 120 * $size-factor;
-  left: 50%;
-  margin-left: -150 * $size-factor;
+  left: 0;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.star-image {
   width: 300 * $size-factor;
   height: 300 * $size-factor;
   object-fit: contain;
