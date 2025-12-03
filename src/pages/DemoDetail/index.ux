@@ -150,12 +150,18 @@ export default {
         }
       }
 
+      console.log('DemoDetail - jumping to Result with:', {
+        testTitle: this.testTitle,
+        resultLevel: resultLevel,
+        resultDesc: resultDesc
+      })
+      
       router.replace({
         uri: '/pages/Result',
         params: {
-          testTitle: this.testTitle,
-          resultLevel: resultLevel,
-          resultDesc: resultDesc
+          testTitle: encodeURIComponent(this.testTitle),
+          resultLevel: encodeURIComponent(resultLevel),
+          resultDesc: encodeURIComponent(resultDesc)
         }
       })
     }

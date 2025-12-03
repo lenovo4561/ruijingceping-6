@@ -48,12 +48,38 @@ export default {
     resultDesc: ''
   },
   onInit() {
-    // 从路由参数获
+    console.log('Result onInit - $page:', JSON.stringify(this.$page))
+    console.log('Result onInit - query:', JSON.stringify(this.$page && this.$page.query))
+    
+    // 从路由参数获取（需要解码）
     if (this.$page && this.$page.query) {
-      if (this.$page.query.testTitle) this.testTitle = this.$page.query.testTitle
-      if (this.$page.query.resultLevel) this.resultLevel = this.$page.query.resultLevel
-      if (this.$page.query.resultDesc) this.resultDesc = this.$page.query.resultDesc
+      if (this.$page.query.testTitle) {
+        try {
+          this.testTitle = decodeURIComponent(this.$page.query.testTitle)
+        } catch (e) {
+          this.testTitle = this.$page.query.testTitle
+        }
+      }
+      if (this.$page.query.resultLevel) {
+        try {
+          this.resultLevel = decodeURIComponent(this.$page.query.resultLevel)
+        } catch (e) {
+          this.resultLevel = this.$page.query.resultLevel
+        }
+      }
+      if (this.$page.query.resultDesc) {
+        try {
+          this.resultDesc = decodeURIComponent(this.$page.query.resultDesc)
+        } catch (e) {
+          this.resultDesc = this.$page.query.resultDesc
+        }
+      }
     }
+    
+    console.log('Result - testTitle:', this.testTitle)
+    console.log('Result - resultLevel:', this.resultLevel)
+    console.log('Result - resultDesc:', this.resultDesc)
+    
     // 如果没有传参，显示默认值（调试用）
     if (!this.resultLevel) {
       this.testTitle = '情商测试'
